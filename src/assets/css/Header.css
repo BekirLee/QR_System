@@ -1,0 +1,125 @@
+/* src/components/Header.css */
+
+.main-header-wrapper {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden; /* SVG kənara çıxmasın */
+  background-color: #f4f4f4; /* Header altında boşluq qalsa görünəcək rəng */
+}
+
+.header-background-image {
+  width: 100%;
+  height: 100%; /* Şəkilin hündürlüyü */
+  background-size: cover;
+  background-position: center;
+  position: relative; /* SVG-ni üzərinə qoymaq üçün */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header-wave-svg {
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1; /* Şəkilin üstündə olsun */
+}
+
+.header-content-top {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  color: white;
+  z-index: 10; /* Üst qatda olsun */
+}
+
+.flag-icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.cafe-logo-container {
+  position: absolute;
+  top: 30%; /* Şaquli mərkəzə */
+  left: 50%; /* Üfüqi mərkəzə */
+  transform: translate(-50%, -50%); /* Tam mərkəzə gətirir */
+  z-index: 5; /* Şəkilin üstündə, digər məzmunun altında */
+}
+
+.cafe-logo-circle {
+  width: 70px;
+  height: 70px;
+  /* background-colo: rgba(255, 255, 255, 0.2); Yarı-şəffaf ağ fon */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  backdrop-filter: blur(5px); /* Arxa fonu bulanıq etmək üçün */
+  -webkit-backdrop-filter: blur(5px); /* Safari dəstəyi */
+
+   border-radius: 26843500px;
+  border: 1.6px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+}
+
+.header-content-bottom {
+  position: absolute;
+  bottom: 0px; /* SVG-nin dalğasının üstündə */
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: white;
+  padding-bottom: 20px; /* SVG-nin hündürlüyünə uyğun boşluq */
+  z-index: 10; /* Üst qatda olsun */
+}
+
+.cafe-name {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-bottom: 0;
+  margin-top: 10px; /* Logo ilə arasında boşluq */
+}
+
+.cafe-type {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+}
+
+.rating-info,
+.like-info,
+.service-fee {
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Mərkəzləmək üçün */
+  gap: 5px; /* İkon və mətn arasında boşluq */
+  margin-bottom: 0.3rem;
+}
+
+.info-divider {
+  font-size: 1.2rem;
+  margin: 0 5px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.service-fee {
+  background-color: rgba(255, 255, 255, 0.2); /* Yarı-şəffaf fon */
+  border-radius: 20px;
+  padding: 5px 15px;
+  display: inline-flex; /* Məzmununa uyğun eni olsun */
+  margin-top: 10px;
+}

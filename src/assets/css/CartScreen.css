@@ -1,0 +1,97 @@
+.empty-cart-gif{
+    width: 100%;
+    object-fit: contain;
+}
+
+.cart-item-new {
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.cart-item-new img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.btn-circle {
+  border-radius: 50% !important;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.notes-section h6 {
+  margin-left: 0.5rem;
+}
+.notes-textarea {
+  border: 1px solid #eee;
+  border-radius: 15px;
+  background-color: #fafafa;
+  box-shadow: none;
+}
+.notes-textarea:focus {
+  background-color: #fff;
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+}
+
+.cart-summary-block {
+  background-color: #ffffff;
+  padding: 1.2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.cart-summary-block h6 {
+  font-size: 1rem;
+}
+
+.summary-row,
+.summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.summary-row span:first-child {
+  color: #6c757d; /* Boz rəng */
+}
+.summary-row span:last-child {
+  font-weight: 500;
+  color: #212529; /* Qara rəng */
+}
+
+.summary-total {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0d6efd; /* Göy rəng */
+  margin-top: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.btn-order {
+  border-radius: 25px;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.btn-clear-cart {
+  color: #6c757d;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn-clear-cart:hover {
+  color: #dc3545; /* Qırmızı rəng (hover) */
+}

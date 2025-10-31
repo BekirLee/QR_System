@@ -1,42 +1,138 @@
-#root {
-  max-width: 1280px;
+/* src/App.css */
+
+/* Bütün tətbiqi mobil görünüşdə saxlamaq üçün */
+body {
+  background-color: #f4f4f4; /* Arxa fon rəngi */
+}
+
+.mobile-view-wrapper {
+  max-width: 480px; /* Maksimum mobil eni */
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  background-color: #ffffff;
+  min-height: 100vh;
+  padding-bottom: 70px; /* BottomNav üçün boşluq */
+  position: relative;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Üfüqi scroll olan konteynerlər üçün ümumi stil */
+.horizontal-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 0;
+  /* Scrollbar-ı gizlətmək üçün */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.horizontal-scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Kateqoriya filter düymələri */
+.category-filter .btn {
+  margin-right: 10px;
+  border-radius: 20px;
+  font-weight: 500;
 }
 
-.card {
-  padding: 2em;
+/* Məhsul Kartı stilləri */
+.product-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 1rem;
+  background: #fff;
 }
 
-.read-the-docs {
-  color: #888;
+.product-card-horizontal {
+  min-width: 180px; /* Horizontal scroll üçün kart eni */
+  margin-right: 15px;
+}
+
+.product-card .card-img-top {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.product-card .card-body {
+  padding: 0.8rem;
+}
+
+.product-card .card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.product-card-info {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.product-card-price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #000;
+}
+
+/* Ürək ikonu */
+.heart-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #fd4b4b;
+}
+
+/* Əlavə et düyməsi */
+.add-to-cart-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #0d6efd;
+  color: white;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+/*  */
+
+/* Header (Sadələşdirilmiş) */
+.main-header {
+  padding: 1rem;
+  background-color: #5b3a29; /* Təxmini rəng */
+  color: white;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.header-info {
+  margin-top: 1rem;
+}
+
+.header-info h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.rating-info {
+    font-size: 0.9rem;
 }
