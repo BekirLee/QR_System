@@ -1,13 +1,13 @@
-.empty-cart-gif{
-    width: 100%;
-    object-fit: contain;
+.empty-cart-gif {
+  width: 100%;
+  object-fit: contain;
 }
 
 .cart-item-new {
   background-color: #ffffff;
   padding: 1rem;
   border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .cart-item-new img {
@@ -40,14 +40,14 @@
 .notes-textarea:focus {
   background-color: #fff;
   border-color: #0d6efd;
-  box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
 .cart-summary-block {
   background-color: #ffffff;
   padding: 1.2rem;
   border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 }
 
 .cart-summary-block h6 {
@@ -95,3 +95,5 @@
 .btn-clear-cart:hover {
   color: #dc3545; /* Qırmızı rəng (hover) */
 }
+
+

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
 const SERVICE_FEE_PERCENTAGE = 0.05;
@@ -12,32 +12,52 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = (product) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find(item => item.id === product.id);
+      const existingItem = prevCart.find((item) => item.id === product.id);
       if (existingItem) {
-        return prevCart.map(item =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        return prevCart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
       }
       return [...prevCart, { ...product, quantity: 1 }];
     });
   };
 
+  const addItemWithQuantity = (product, quantityToAdd) => {
+    setCart((prevCart) => {
+      const existingItem = prevCart.find((item) => item.id === product.id);
+
+      if (existingItem) {
+        // Məhsul varsa, sayını artır
+        return prevCart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + quantityToAdd }
+            : item
+        );
+      }
+
+      // Məhsul yoxdursa, yeni məhsul kimi əlavə et
+      return [...prevCart, { ...product, quantity: quantityToAdd }];
+    });
+  };
+
   const removeFromCart = (productId) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find(item => item.id === productId);
+      const existingItem = prevCart.find((item) => item.id === productId);
       if (existingItem.quantity === 1) {
-        return prevCart.filter(item => item.id !== productId);
+        return prevCart.filter((item) => item.id !== productId);
       }
-      return prevCart.map(item =>
+      return prevCart.map((item) =>
         item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
       );
     });
   };
 
   const deleteFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter(item => item.id !== productId));
+    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
   };
-  
+
   const clearCart = () => {
     setCart([]);
   };
@@ -45,7 +65,7 @@ export const CartProvider = ({ children }) => {
   const getCartItemCount = () => {
     return cart.reduce((total, item) => total + item.quantity, 0);
   };
-  
+
   const getCartSubtotal = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
@@ -55,18 +75,19 @@ export const CartProvider = ({ children }) => {
   };
   const getCartTotal = () => {
     return getCartSubtotal() + getServiceFee();
-  }
+  };
 
   const value = {
     cart,
     addToCart,
     removeFromCart,
-    deleteFromCart, 
-    clearCart,      
+    deleteFromCart,
+    clearCart,
     getCartItemCount,
-    getCartSubtotal, 
-    getServiceFee,  
-    getCartTotal    
+    getCartSubtotal,
+    getServiceFee,
+    getCartTotal,
+    addItemWithQuantity
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

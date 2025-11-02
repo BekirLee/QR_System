@@ -1,0 +1,117 @@
+/* src/App.css faylının sonuna əlavə edin */
+
+/* --- Məhsul Detalları Səhifəsi --- */
+.product-detail-page {
+  background-color: #fff;
+  padding-bottom: 100px; /* Alt çubuq üçün boşluq */
+}
+
+/* Şəkil və SVG Başlıq */
+.detail-header-image {
+  width: 100%;
+  height: 280px; /* Hündürlüyü bir az artıraq */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.detail-wave-svg {
+  position: absolute;
+  bottom: 0; 
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 1;
+}
+
+.detail-header-top {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  color: #333; 
+  background-color: rgba(255, 255, 255, 0.5); 
+  padding: 10px 15px;
+  backdrop-filter: blur(5px);
+}
+
+.detail-header-top h5 {
+  font-weight: 600;
+}
+
+.product-detail-content {
+  margin-top: -40px;
+  position: relative;
+  z-index: 5;
+  background-color: #fff;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  padding-top: 1.5rem;
+}
+
+/* Allergiya Badges */
+.allergy-badge {
+  font-size: 0.9rem;
+  padding: 0.5em 1em;
+  margin-right: 0.5rem;
+  background-color: #ffebee !important; 
+  color: #e53935 !important; 
+  font-weight: 500;
+}
+
+/* Alt Səbətə Əlavə Et Çubuğu */
+.detail-cart-footer {
+  /* position: fixed; */
+  /* bottom: 0;
+  left: 0;
+  right: 0; */
+  max-width: 480px; /* mobile-view-wrapper ilə eyni */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  /* background-color: #ffffff; */
+  border-top: 1px solid #eee;
+  /* box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08); */
+  z-index: 1000;
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-selector .btn-circle {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+.quantity-selector .btn-light {
+    background-color: #f0f0f0;
+}
+
+.btn-add-to-cart {
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.header-wave-svg {
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}

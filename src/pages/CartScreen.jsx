@@ -1,7 +1,7 @@
 // src/pages/CartScreen.jsx
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Button, Image, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   ArrowLeft,
   Plus,
@@ -11,22 +11,46 @@ import {
   CheckCircleFill,
 } from "react-bootstrap-icons";
 import { useCart } from "../context/CartContext";
+import '../assets/css/CartScreen.css'
 
 const EmptyCart = () => (
   <div className="empty-cart-container text-center">
     <div className="gif-placeholder">
-      <img
-        src="/img/cart.gif" 
-        alt="Boş səbət"
-        className="empty-cart-gif"
-      />
+      <img src="/img/cart.gif" alt="Boş səbət" className="empty-cart-gif w-100" />
     </div>
     <h3 className="mt-4">Səbətiniz Boşdur </h3>
     <p className="text-muted">Başlamaq üçün menyudan məhsullar əlavə edin.</p>
   </div>
 );
 
-const CartList = () => {
+const OrderSuccess = ({ onReturnToMenu }) => (
+  <div className="order-success-container text-center">
+    <div className="gif-placeholder-success">
+      <img
+        src="/img/cartSucces.gif"
+        alt="Sifariş tamamlandı"
+        className="order-success-gif w-100"
+      />
+    </div>
+    <h2 className="mt-4 fw-bold">Sifarişiniz tamamlandı.</h2>
+    <p className="text-muted fs-5">
+      Təşəkkür edirik! Qısa zamanda hazır olacaq – nuş olsun!
+    </p>
+    <Button
+      // variant="primary"
+      className="w-100 mt-5 btn-order btnmain" 
+      onClick={onReturnToMenu}
+    >
+      Menyuya qayıt
+    </Button>
+
+    <Link to="/review" className="btn btn-link w-100 mt-2 text-decoration-none fw-bold">
+      Təcrübənizi qiymətləndirin
+    </Link>
+  </div>
+);
+
+const CartList = ({ onOrderComplete }) => {
   const {
     cart,
     addToCart,
@@ -199,7 +223,11 @@ const CartList = () => {
           <span>{total.toFixed(2)} ₼</span>
         </div>
 
-        <Button variant="primary" className="w-100 mt-3 btn-order">
+        <Button
+          variant="primary"
+          className="w-100 mt-3 btn-order"
+          onClick={onOrderComplete}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="22"
@@ -280,12 +308,25 @@ const CartList = () => {
 };
 
 const CartScreen = () => {
-  const { cart } = useCart();
+  const { cart, clearCart } = useCart(); 
+  const [isOrderComplete, setIsOrderComplete] = useState (false); 
+  const navigate = useNavigate();
+
+  const handleOrderComplete = () => {
+    clearCart(); 
+    setIsOrderComplete(true); 
+  };
+
+  const handleReturnToMenu = () => {
+    navigate("/"); 
+  };
+
+  const backLink = isOrderComplete ? "/" : "/";
 
   return (
     <Container fluid className="p-3 cart-screen">
       <div className="cart-header d-flex align-items-center mb-4">
-        <Link to="/" className="text-dark me-3">
+        <Link to={backLink} className="text-dark me-3">
           <ArrowLeft size={24} />
         </Link>
         <h5
@@ -296,7 +337,13 @@ const CartScreen = () => {
         </h5>
       </div>
 
-      {cart.length === 0 ? <EmptyCart /> : <CartList />}
+      {isOrderComplete ? (
+        <OrderSuccess onReturnToMenu={handleReturnToMenu} />
+      ) : cart.length === 0 ? (
+        <EmptyCart />
+      ) : (
+        <CartList onOrderComplete={handleOrderComplete} />
+      )}
     </Container>
   );
 };

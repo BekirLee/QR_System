@@ -1,0 +1,75 @@
+/* src/App.css faylının sonuna əlavə edin */
+
+/* --- Rəy Səhifəsi Stilləri --- */
+.review-screen {
+  padding-bottom: 3rem; /* Düymə üçün aşağıda boşluq */
+}
+
+.review-header {
+  position: relative;
+}
+
+.review-header h5 {
+  font-weight: 600;
+}
+
+.review-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Dinamik Emoji */
+.emoji-display {
+  font-size: 6rem; /* Böyük emoji */
+  margin: 1rem 0;
+  line-height: 1;
+}
+
+/* Ulduz Konteyneri */
+.stars-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.star-icon {
+  font-size: 2.5rem; /* Böyük ulduzlar */
+  color: #e0e0e0; /* Boş ulduz rəngi */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.star-icon.filled {
+  color: #ffc107; /* Dolu ulduz rəngi */
+  transform: scale(1.1); /* Seçiləndə yüngül böyümə effekti */
+}
+
+/* Ulduz altındakı mətn */
+.rating-text {
+  font-size: 1.1rem;
+  color: #6c757d;
+  font-weight: 500;
+  min-height: 24px; /* Mətn dəyişəndə səhifənin "atlamaması" üçün */
+}
+
+/* Rəy qutusu */
+.review-textarea {
+  border: 1px solid #eee;
+  border-radius: 15px;
+  background-color: #fafafa;
+  box-shadow: none !important;
+}
+
+.review-textarea:focus {
+  background-color: #fff;
+  border-color: #0d6efd;
+}
+
+/* Göndərmə düyməsi */
+.btn-submit-review {
+  border-radius: 25px;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
