@@ -10,12 +10,16 @@ import {
 import "../assets/css/Footer.css";
 import { useCart } from "../context/CartContext";
 import { Link, useLocation } from "react-router-dom";
+import { useFavorites } from "../context/FavoritesContext";
 
 const BottomNav = () => {
   const { getCartItemCount } = useCart();
+  const { favorites } = useFavorites();
   const location = useLocation();
 
   const totalItems = getCartItemCount();
+  const totalFavorites = favorites.length;
+
   return (
     <div className="bottom-nav-container">
       <svg
@@ -63,9 +67,10 @@ const BottomNav = () => {
             />
           </svg>
         </Link>
+
         <Link
           to="/favorites"
-          className={`bottom-nav-item ${
+          className={`bottom-nav-item favoritesBtn ${
             location.pathname === "/favorites" ? "active" : ""
           }`}
         >
@@ -84,7 +89,12 @@ const BottomNav = () => {
               stroke-linejoin="round"
             />
           </svg>
+
+          {totalFavorites > 0 && (
+            <span className="cart-badge">{totalFavorites}</span>
+          )}
         </Link>
+
         <Link
           to="/cart"
           className={`bottom-nav-item  cart-btn ${
@@ -136,6 +146,7 @@ const BottomNav = () => {
           </svg>
           {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
         </Link>
+
         <Link
           to="/review"
           className={`bottom-nav-item ${
@@ -165,6 +176,7 @@ const BottomNav = () => {
             />
           </svg>
         </Link>
+
         <Link
           to="/profile"
           cclassName={`bottom-nav-item ${

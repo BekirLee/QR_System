@@ -61,6 +61,12 @@
   border: 3px solid white;
   box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
 }
+
+.favoritesBtn{
+  position: relative;
+  /* top: 0; */
+}
+
 .cart-badge {
     position: absolute;
     top: -5px;
