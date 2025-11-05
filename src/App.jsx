@@ -9,6 +9,8 @@ import ProductDetailScreen from "./pages/ProductDetailScreen";
 import BottomNav from "./components/BottomNav";
 import "./App.css";
 import ReviewScreen from "./pages/ReviewScreen";
+import { FavoritesProvider } from "./context/FavoritesContext";
+import FavoritesScreen from "./pages/FavoritesScreen";
 
 const AppContent = () => {
   const location = useLocation();
@@ -20,6 +22,7 @@ const AppContent = () => {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/cart" element={<CartScreen />} />
         <Route path="/review" element={<ReviewScreen />} />
+        <Route path="/favorites" element={<FavoritesScreen />} />
         <Route path="/product/:productId" element={<ProductDetailScreen />} />
       </Routes>
 
@@ -32,7 +35,9 @@ function App() {
   return (
     <BrowserRouter>
       <CartProvider>
-        <AppContent />
+        <FavoritesProvider>
+          <AppContent />
+        </FavoritesProvider>
       </CartProvider>
     </BrowserRouter>
   );

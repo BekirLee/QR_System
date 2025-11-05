@@ -137,9 +137,9 @@ const BottomNav = () => {
           {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
         </Link>
         <Link
-          to="/chat"
+          to="/review"
           className={`bottom-nav-item ${
-            location.pathname === "/chat" ? "active" : ""
+            location.pathname === "/review" ? "active" : ""
           }`}
         >
           <svg

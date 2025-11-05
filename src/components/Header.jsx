@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Badge } from "react-bootstrap";
 import {
   ArrowLeft,
@@ -10,8 +10,14 @@ import {
   CurrencyDollar,
 } from "react-bootstrap-icons";
 import "./../assets/css/Header.css";
+import InfoSheet from "./InfoSheet";
 
 const Header = () => {
+  const [showInfo, setShowInfo] = useState(false);
+
+  const handleShowInfo = () => setShowInfo(true);
+  const handleCloseInfo = () => setShowInfo(false);
+
   return (
     <div className="main-header-wrapper">
       <div
@@ -24,6 +30,8 @@ const Header = () => {
           viewBox="0 0 375 240"
           fill="none"
           preserveAspectRatio="none"
+          onClick={handleShowInfo} // --- KLİK HADİSƏSİ ƏLAVƏ EDİLDİ ---
+          style={{ cursor: "pointer" }}
         >
           <path
             d="M2.37162e-10 222.087C165.527 272.265 266.895 198.596 375 222.087C375 158.454 375 0 375 0H2.37162e-10C2.37162e-10 0 -2.96453e-10 191.683 2.37162e-10 222.087Z"
@@ -47,11 +55,14 @@ const Header = () => {
 
         <div className="header-content-top">
           {/* <ArrowLeft size={24} /> */}
-          <div className="" style={{
-            width:'24px'
-          }}></div>
+          <div
+            className=""
+            style={{
+              width: "24px",
+            }}
+          ></div>
           <div className="d-flex align-items-center">
-            <Wifi size={20} className="me-3" />
+            <Wifi size={20} className="me-3" onClick={handleShowInfo} />
             <Bell size={20} className="me-3" />
             <div className="flag">
               <svg
@@ -146,6 +157,7 @@ const Header = () => {
           <PersonFill className="me-1" /> Xidmət haqqı: 5%
         </div>
       </div>
+      <InfoSheet show={showInfo} onHide={handleCloseInfo} />
     </div>
   );
 };
