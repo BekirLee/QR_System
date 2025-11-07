@@ -1,3 +1,4 @@
+// src/components/ProductCard.jsx
 import React from "react";
 import { Card } from "react-bootstrap";
 import { StarFill, HeartFill, Plus } from "react-bootstrap-icons";
@@ -5,10 +6,10 @@ import { useCart } from "../context/CartContext";
 import { useFavorites } from "../context/FavoritesContext";
 import { Link } from "react-router-dom";
 
+// Dəyişiklik yoxdur, olduğu kimi qalır
 const ProductCard = ({ product, isHorizontal = false }) => {
   const { addToCart } = useCart();
   const { addToFavorites, removeFromFavorites, isFavorited } = useFavorites();
-
   const isItemFavorited = isFavorited(product.id);
 
   const handleAddToCartClick = (e) => {
@@ -27,6 +28,20 @@ const ProductCard = ({ product, isHorizontal = false }) => {
     }
   };
 
+  // ----- DƏYİŞİKLİKLƏR BURADADIR -----
+
+  // 1. API-dən gələn 'img' istifadə edirik və tam URL yaradırıq
+  //    Şəkil yoxdursa, ehtiyat üçün bir şəkil yolu (placeholder) qoyun
+  const imageUrl = product.img
+    ? `https://tamteam.net/${product.img}`
+    : "https://via.placeholder.com/150"; // Ehtiyat şəkil
+
+  // 2. API-dən gələn qiymət string-dir, onu rəqəmə çeviririk
+  const price = parseFloat(product.price).toFixed(2);
+
+  // 3. API-dən gəlməyən dataları (rating, deliveryTime)
+  //    ya gizlədirik, ya da müvəqqəti data veririk. Mən gizlətdim.
+
   return (
     <Link to={`/product/${product.id}`} className="text-decoration-none">
       <Card
@@ -35,7 +50,10 @@ const ProductCard = ({ product, isHorizontal = false }) => {
         }`}
       >
         <div style={{ position: "relative" }}>
-          <Card.Img variant="top" src={product.image} />
+          {/* DƏYİŞİKLİK: product.image -> imageUrl */}
+          <Card.Img variant="top" src={imageUrl} />
+
+          {/* 'Heart' ikonu olduğu kimi qalır */}
           <div
             className="heart"
             onClick={handleFavoriteClick}
@@ -73,19 +91,25 @@ const ProductCard = ({ product, isHorizontal = false }) => {
           </div>
         </div>
         <Card.Body>
+          {/* DƏYİŞİKLİK: product.name olduğu kimi qalır */}
           <Card.Title>{product.name}</Card.Title>
-          <div className="d-flex justify-content-between align-items-center mb-2 product-card-info">
+
+          {/* DƏYİŞİKLİK: 'deliveryTime' və 'rating' olan hissəni gizlətdim
+              Çünki bu data API-dən gəlmir.
+          */}
+          {/* <div className="d-flex justify-content-between align-items-center mb-2 product-card-info">
             <span>
               <i className="bi bi-clock"></i> {product.deliveryTime} dəq
             </span>
             <span>
               <StarFill color="#ffc107" className="me-1" /> {product.rating}
             </span>
-          </div>
-          <div className="d-flex justify-content-between align-items-center">
-            <span className="product-card-price">
-              {product.price.toFixed(2)} ₼
-            </span>
+          </div> 
+          */}
+
+          <div className="d-flex justify-content-between align-items-center mt-2">
+            {/* DƏYİŞİKLİK: product.price -> price (formatlanmış) */}
+            <span className="product-card-price">{price} ₼</span>
             {!isHorizontal && (
               <button
                 className="add-to-cart-btn"

@@ -1,19 +1,36 @@
 // src/components/CategoryFilters.jsx
 import React from "react";
 import { Button } from "react-bootstrap";
-import { categories } from "../data";
+// STATİK DATANI SİLİRİK: import { categories } from "../data";
 import "./../App.css";
-const CategoryFilters = () => {
+
+// DƏYİŞİKLİK: Props-ları qəbul edirik
+const CategoryFilters = ({ 
+  categories, 
+  activeCategory, 
+  onCategoryClick, 
+  buttonRefs 
+}) => {
   return (
-    <div className="p-2 category-filter">
-      <div className="horizontal-scroll-container">
-        {categories.map((category, index) => (
+    // Sizin CSS sinfiniz olduğu kimi qalır
+    <div className="p-2 category-filter"> 
+      <div className="horizontal-scroll-container category-filter-bar"> 
+        {/* DƏYİŞİKLİK: Statik data yerinə 'categories' prop-unu map edirik */}
+        {categories.map((category) => (
           <Button
-            key={index}
-            // variant={index === 0 ? 'btnmain' : 'light'}
-            className={index == 0 ? "btnmainlittle" : "btn-light"}
+            key={category.id}
+            // DƏYİŞİKLİK: Ref-i HomeScreen-dən alırıq (avto-scroll üçün)
+            ref={(el) => {
+              if (el) buttonRefs.current.set(category.id, el);
+            }}
+            // DƏYİŞİKLİK: Aktiv stili dinamik təyin edirik
+            className={
+              activeCategory === category.id ? "btnmainlittle" : "btn-light"
+            }
+            // DƏYİŞİKLİK: Klikləyəndə HomeScreen-dəki funksiyanı çağırırıq
+            onClick={() => onCategoryClick(category.id)}
           >
-            {category}
+            {category.name}
           </Button>
         ))}
       </div>

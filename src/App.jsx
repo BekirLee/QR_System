@@ -11,6 +11,7 @@ import "./App.css";
 import ReviewScreen from "./pages/ReviewScreen";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import FavoritesScreen from "./pages/FavoritesScreen";
+import { MenuProvider } from "./context/MenuContext";
 
 const AppContent = () => {
   const location = useLocation();
@@ -36,7 +37,9 @@ function App() {
     <BrowserRouter>
       <CartProvider>
         <FavoritesProvider>
-          <AppContent />
+          <MenuProvider>
+            <AppContent />
+          </MenuProvider>
         </FavoritesProvider>
       </CartProvider>
     </BrowserRouter>
