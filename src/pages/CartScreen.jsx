@@ -11,12 +11,16 @@ import {
   CheckCircleFill,
 } from "react-bootstrap-icons";
 import { useCart } from "../context/CartContext";
-import '../assets/css/CartScreen.css'
+import "../assets/css/CartScreen.css";
 
 const EmptyCart = () => (
   <div className="empty-cart-container text-center">
     <div className="gif-placeholder">
-      <img src="/img/cart.gif" alt="Boş səbət" className="empty-cart-gif w-100" />
+      <img
+        src="/img/cart.gif"
+        alt="Boş səbət"
+        className="empty-cart-gif w-100"
+      />
     </div>
     <h3 className="mt-4">Səbətiniz Boşdur </h3>
     <p className="text-muted">Başlamaq üçün menyudan məhsullar əlavə edin.</p>
@@ -38,13 +42,16 @@ const OrderSuccess = ({ onReturnToMenu }) => (
     </p>
     <Button
       // variant="primary"
-      className="w-100 mt-5 btn-order btnmain" 
+      className="w-100 mt-5 btn-order btnmain"
       onClick={onReturnToMenu}
     >
       Menyuya qayıt
     </Button>
 
-    <Link to="/review" className="btn btn-link w-100 mt-2 text-decoration-none fw-bold">
+    <Link
+      to="/review"
+      className="btn btn-link w-100 mt-2 text-decoration-none fw-bold"
+    >
       Təcrübənizi qiymətləndirin
     </Link>
   </div>
@@ -73,7 +80,21 @@ const CartList = ({ onOrderComplete }) => {
       {cart.map((item) => (
         <Row key={item.id} className="cart-item-new align-items-center mb-3">
           <Col xs={4}>
-            <Image src={item.image} fluid rounded />
+            <Image
+              // URL-i HomeScreen-dəki kimi düzəldirik
+              src={
+                item.img
+                  ? `https://tamteam.net/${item.img}`
+                  : "https://via.placeholder.com/100"
+              }
+              alt={item.name}
+              style={{
+                width: "70px",
+                height: "70px",
+                objectFit: "cover",
+                borderRadius: "12px",
+              }}
+            />
           </Col>
           <Col xs={8}>
             <h6 className="fw-bold mb-1">{item.name}</h6>
@@ -86,7 +107,7 @@ const CartList = ({ onOrderComplete }) => {
               </span>
             </div>
             <h5 className="fw-bold text-primary mb-3">
-              {item.price.toFixed(2)} ₼
+              {parseFloat(item.price).toFixed(2)} ₼
             </h5>
 
             <div className="d-flex align-items-center">
@@ -308,17 +329,17 @@ const CartList = ({ onOrderComplete }) => {
 };
 
 const CartScreen = () => {
-  const { cart, clearCart } = useCart(); 
-  const [isOrderComplete, setIsOrderComplete] = useState (false); 
+  const { cart, clearCart } = useCart();
+  const [isOrderComplete, setIsOrderComplete] = useState(false);
   const navigate = useNavigate();
 
   const handleOrderComplete = () => {
-    clearCart(); 
-    setIsOrderComplete(true); 
+    clearCart();
+    setIsOrderComplete(true);
   };
 
   const handleReturnToMenu = () => {
-    navigate("/"); 
+    navigate("/");
   };
 
   const backLink = isOrderComplete ? "/" : "/";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Row,
@@ -6,6 +6,8 @@ import {
   Button,
   Badge,
   ProgressBar,
+  Spinner,
+  Alert,
 } from "react-bootstrap";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
@@ -17,8 +19,10 @@ import {
   CartFill,
 } from "react-bootstrap-icons";
 import { useCart } from "../context/CartContext";
-import { products } from "../data"; 
-import "./../assets/css/ProductDetail.css";
+import { useMenu } from "../context/MenuContext";
+import "./../assets/css/ProductDetail.css"; // CSS faylınız (App.css-dən ayrıdırsa)
+
+// ... NutritionInfo komponenti olduğu kimi qalır ...
 const NutritionInfo = ({ label, value, color }) => (
   <Col className="text-center">
     <ProgressBar
@@ -33,45 +37,97 @@ const NutritionInfo = ({ label, value, color }) => (
 );
 
 const ProductDetailScreen = () => {
+  // ... Bütün React hook-ları (useParams, useState, useEffect) olduğu kimi qalır ...
   const { productId } = useParams();
-  const { addItemWithQuantity } = useCart(); 
+  const { addItemWithQuantity } = useCart();
   const navigate = useNavigate();
-  const [quantity, setQuantity] = useState(1); 
+  const [quantity, setQuantity] = useState(1);
+  const { menuData, status } = useMenu();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const fullDescription =
+    "Yumşaq və ətirli pancake-lər, üzərinə ərimiş kərə yağı, təravətli meyvələr, və xüsusi ağcaqayın siropumuz əlavə olunub.\nBu, günə başlamaq üçün mükəmməl bir yoldur və sizə enerji verəcək. Hər bir loxma sizi sevindirəcək və gününüzü daha da gözəlləşdirəcək.";
 
-  const product = products.find((p) => p.id.toString() === productId);
+  // Neçə simvoldan sonra qısaldılacağını təyin edirik
+  const TRUNCATE_LENGTH = 120;
 
+  // Düyməyə kliklədikdə state-i dəyişən funksiya
+  const toggleExpanded = (e) => {
+    e.preventDefault(); // a tag-inin səhifəni yeniləməsinin qarşısını alır
+    setIsExpanded(!isExpanded);
+  };
+
+  // Göstəriləcək mətni təyin edirik
+  const displayedText = isExpanded
+    ? fullDescription
+    : `${fullDescription.substring(0, TRUNCATE_LENGTH)}...`;
+  useEffect(() => {
+    if (status === "succeeded" && menuData.length > 0) {
+      setLoading(true);
+      let foundProduct = null;
+      const allProducts = menuData
+        .flatMap((mainCat) => mainCat.categories)
+        .flatMap((subCat) => subCat.products);
+      foundProduct = allProducts.find((p) => p.id === productId);
+      setProduct(foundProduct);
+      setLoading(false);
+    } else if (status === "loading" || status === "idle") {
+      setLoading(true);
+    }
+  }, [status, menuData, productId]);
+
+  // ... Yüklənmə və "Məhsul tapılmadı" hissələri olduğu kimi qalır ...
+  if (loading || status === "loading") {
+    return (
+      <Container className="d-flex justify-content-center align-items-center vh-100">
+        <Spinner animation="border" />
+      </Container>
+    );
+  }
   if (!product) {
     return (
       <Container className="text-center mt-5">
-        <h2>Məhsul tapılmadı</h2>
-        <Link to="/">Ana səhifəyə qayıt</Link>
+        <Alert variant="danger">Məhsul tapılmadı.</Alert>
+        <Link to="/" className="btn btn-primary">
+          Ana səhifəyə qayıt
+        </Link>
       </Container>
     );
   }
 
   const handleAddToCart = () => {
     addItemWithQuantity(product, quantity);
-    navigate("/cart"); 
+    navigate("/cart");
   };
+
+  const imageUrl = product.img
+    ? `https://tamteam.net/${product.img}`
+    : "https://via.placeholder.com/400";
 
   return (
     <div className="product-detail-page">
       <div className="main-header-wrapper">
         <div
           className="detail-header-image"
-          style={{ backgroundImage: `url(${product.image})` }}
+          style={{ backgroundImage: `url(${imageUrl})` }}
         >
+          {/* ----- YENİ SVG BLOKU ----- */}
+          {/* Köhnə mürəkkəb SVG-ni bununla əvəz edin */}
           <svg
             className="detail-wave-svg"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 375 240"
-            fill="none"
-            preserveAspectRatio="none"
+            viewBox="0 0 375 50" /* Hündürlüyü 50 vahid təyin edirik */
+            preserveAspectRatio="none" /* Genişliyə görə yayılsın */
           >
+            {/* Bu path yuxarı düz xətt və aşağıya doğru simmetrik "qabarıq" 
+              bir əyri yaradır (HomeScreen-dəki kimi)
+            */}
             <path
-              d="M2.37162e-10 222.087C165.527 272.265 266.895 198.596 375 222.087C375 158.454 375 0 375 0H2.37162e-10C2.37162e-10 0 -2.96453e-10 191.683 2.37162e-10 222.087Z"
-              fill="url(#paint_detail_wave)"
+              d="M 0 0 L 375 0 L 375 25 Q 187.5 50 0 25 Z"
+              fill="url(#paint_detail_wave)" /* Sizin gradient-i istifadə edir */
             />
+            {/* Sizin <defs> bloku olduğu kimi qalır */}
             <defs>
               <linearGradient
                 id="paint_detail_wave"
@@ -87,6 +143,7 @@ const ProductDetailScreen = () => {
               </linearGradient>
             </defs>
           </svg>
+          {/* ----- YENİ SVG BLOKUNUN SONU ----- */}
 
           <div className="detail-header-top">
             <Link to="/" className="text-dark">
@@ -101,6 +158,10 @@ const ProductDetailScreen = () => {
       <Container className="product-detail-content">
         <h2 className="fw-bold text-center">{product.name}</h2>
 
+        {/* QEYD: Bu datalar (Nutrition, Kkal, Time, Rating) sizin API-dən gəlmir.
+          Ona görə də mən onları statik olaraq saxlayıram. 
+          Əgər API-dən gəlsəydi, 'product.rating' kimi istifadə etmək olardı.
+        */}
         <Row className="my-4">
           <NutritionInfo label="Protein" value={65} color="success" />
           <NutritionInfo label="Yağ" value={35} color="warning" />
@@ -112,23 +173,38 @@ const ProductDetailScreen = () => {
             <i className="bi bi-fire text-danger me-1"></i> 240 Kkal
           </Col>
           <Col>
-            <i className="bi bi-clock text-primary me-1"></i>{" "}
-            {product.deliveryTime} Dəq
+            <i className="bi bi-clock text-primary me-1"></i>
+            {/* API-dən gəlmədiyi üçün müvəqqəti data */}
+            {product.deliveryTime || "20-30"} Dəq
           </Col>
           <Col>
-            <StarFill color="#ffc107" className="me-1" /> {product.rating}
+            <StarFill color="#ffc107" className="me-1" />
+            {/* API-dən gəlmədiyi üçün müvəqqəti data */}
+            {product.rating || "4.5"}
           </Col>
         </Row>
 
-        <p>
-          Yumşaq və ətirli pancake-lər,üzərinə ərimiş kərə yağı təravətli
-          meyvələr, və xüsusi ağcaqayın siropumuz əlavə olunub.
-          <a href="#" className="text-decoration-none fw-bold">
-            {" "}
-            Daha çox
-          </a>
-        </p>
+        <div className="my-4">
+          <h5 className="fw-bold">Təsvir:</h5>
+          {/* whiteSpace: "pre-line" mətndəki \n (yeni sətir) işarələrini 
+              HTML-də <br> kimi oxuyur */}
+          <p className="text-muted" style={{ whiteSpace: "pre-line" }}>
+            {displayedText}
 
+            {/* Yalnız mətn həqiqətən uzundursa, düyməni göstər */}
+            {fullDescription.length > TRUNCATE_LENGTH && (
+              <a
+                href="#"
+                className="text-decoration-none fw-bold ms-1"
+                onClick={toggleExpanded}
+              >
+                {isExpanded ? "Daha az" : "Daha çox"}
+              </a>
+            )}
+          </p>
+        </div>
+
+        {/* ... Tərkibi və Allergiya məlumatları olduğu kimi qalır ... */}
         <div className="my-4">
           <h5 className="fw-bold">Tərkibi:</h5>
           <p className="text-muted">
@@ -155,6 +231,7 @@ const ProductDetailScreen = () => {
           </div>
         </div>
 
+        {/* Səbətə əlavə etmə hissəsi olduğu kimi qalır */}
         <div className="detail-cart-footer">
           <div className="quantity-selector">
             <Button
@@ -176,10 +253,7 @@ const ProductDetailScreen = () => {
               <Trash size={20} />
             </Button>
           </div>
-          <Button
-            className="btn-add-to-cart btnmain"
-            onClick={handleAddToCart}
-          >
+          <Button className="btn-add-to-cart btnmain" onClick={handleAddToCart}>
             <CartFill className="me-2" /> Səbətə əlavə et
           </Button>
         </div>

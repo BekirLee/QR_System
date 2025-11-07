@@ -20,8 +20,25 @@
   bottom: 0; 
   left: 0;
   width: 100%;
-  height: auto;
+  /* DƏYİŞİKLİK: 'height: auto;' yerinə, sabit hündürlük veririk */
+  height: 50px; 
   z-index: 1;
+}
+
+.product-detail-content {
+  /* DƏYİŞİKLİK: 
+    Dalğamız 50px hündürlükdədir və ən qabarıq yeri (ortası)
+    aşağıya doğru 25px əyilir. 
+    Ona görə -25px (və ya -30px) üst-üstə minmə (overlap) ideal görünüş yaradacaq.
+    Köhnə '-40px' dəyərini bununla əvəz edin.
+  */
+  margin-top: -30px; 
+  position: relative;
+  z-index: 5;
+  background-color: #fff;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  padding-top: 1.5rem;
 }
 
 .detail-header-top {
@@ -43,7 +60,7 @@
   font-weight: 600;
 }
 
-.product-detail-content {
+/* .product-detail-content {
   margin-top: -40px;
   position: relative;
   z-index: 5;
@@ -51,7 +68,7 @@
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
   padding-top: 1.5rem;
-}
+} */
 
 /* Allergiya Badges */
 .allergy-badge {
