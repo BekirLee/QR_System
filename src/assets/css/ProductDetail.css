@@ -42,6 +42,7 @@
 }
 
 .detail-header-top {
+  z-index: 20;
   position: absolute;
   top: 0px;
   left: 0;

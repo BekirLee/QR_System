@@ -26,7 +26,7 @@ export const MenuProvider = ({ children }) => {
       setError(null);
       try {
         const response = await axios.get(
-          `https://tamteam.net/api/v1/get_menu_list?profileId=${PROFILE_ID}`
+          `https://tamteam.net/api/v3/get_menu_list?profileId=${PROFILE_ID}`
         );
         setMenuData(response.data);
         setStatus("succeeded");
