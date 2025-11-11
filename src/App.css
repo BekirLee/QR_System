@@ -139,7 +139,7 @@ body {
 
 .btnmain {
   display: flex;
-  padding: var(--V-Padding, 12px) var(--H-Padding, 20px);
+  padding: var(--V-Padding, 12px) var(--H-Padding, 20px) ;
   justify-content: center;
   align-items: center;
   gap: var(--Spacing, 8px);

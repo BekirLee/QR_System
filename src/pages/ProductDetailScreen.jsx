@@ -77,6 +77,10 @@ const ProductDetailScreen = () => {
     }
   }, [status, menuData, productId]);
 
+ const [showInfo, setShowInfo] = useState(false);
+
+  const handleShowInfo = () => setShowInfo(true);
+
   // ... Yüklənmə və "Məhsul tapılmadı" hissələri olduğu kimi qalır ...
   if (loading || status === "loading") {
     return (
@@ -112,39 +116,34 @@ const ProductDetailScreen = () => {
           className="detail-header-image"
           style={{ backgroundImage: `url(${imageUrl})` }}
         >
-          {/* ----- YENİ SVG BLOKU ----- */}
-          {/* Köhnə mürəkkəb SVG-ni bununla əvəz edin */}
           <svg
-            className="detail-wave-svg"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 375 50" /* Hündürlüyü 50 vahid təyin edirik */
-            preserveAspectRatio="none" /* Genişliyə görə yayılsın */
-          >
-            {/* Bu path yuxarı düz xətt və aşağıya doğru simmetrik "qabarıq" 
-              bir əyri yaradır (HomeScreen-dəki kimi)
-            */}
-            <path
-              d="M 0 0 L 375 0 L 375 25 Q 187.5 50 0 25 Z"
-              fill="url(#paint_detail_wave)" /* Sizin gradient-i istifadə edir */
-            />
-            {/* Sizin <defs> bloku olduğu kimi qalır */}
-            <defs>
-              <linearGradient
-                id="paint_detail_wave"
-                x1="187.5"
-                y1="240"
-                x2="187.5"
-                y2="0"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="white" stopOpacity="0.5" />
-                <stop offset="0.5" stopColor="white" stopOpacity="0.3" />
-                <stop offset="1" stopColor="white" stopOpacity="0.7" />
-              </linearGradient>
-            </defs>
-          </svg>
-          {/* ----- YENİ SVG BLOKUNUN SONU ----- */}
-
+          className="header-wave-svg"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 375 240"
+          fill="none"
+          preserveAspectRatio="none"
+          onClick={handleShowInfo} // --- KLİK HADİSƏSİ ƏLAVƏ EDİLDİ ---
+          style={{ cursor: "pointer" }}
+        >
+          <path
+            d="M2.37162e-10 222.087C165.527 272.265 266.895 198.596 375 222.087C375 158.454 375 0 375 0H2.37162e-10C2.37162e-10 0 -2.96453e-10 191.683 2.37162e-10 222.087Z"
+            fill="url(#paint0_linear_2822_7033)"
+          />
+          <defs>
+            {/* <linearGradient
+              id="paint0_linear_2822_7033"
+              x1="187.5"
+              y1="240"
+              x2="187.5"
+              y2="0"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="#5b3a29" stopOpacity="0.5" />{" "}
+              <stop offset="0.5" stopColor="#5b3a29" stopOpacity="0.3" />
+              <stop offset="1" stopColor="#5b3a29" stopOpacity="0.7" />
+            </linearGradient> */}
+          </defs>
+        </svg>
           <div className="detail-header-top">
             <Link to="/" className="text-dark">
               <ArrowLeft size={24} />
@@ -213,7 +212,7 @@ const ProductDetailScreen = () => {
           </p>
         </div>
 
-        <div className="my-4">
+        {/* <div className="my-4">
           <h5 className="fw-bold">Allergiya məlumatları:</h5>
           <div>
             <Badge pill bg="danger" className="allergy-badge">
@@ -229,7 +228,7 @@ const ProductDetailScreen = () => {
               Bal
             </Badge>
           </div>
-        </div>
+        </div> */}
 
         {/* Səbətə əlavə etmə hissəsi olduğu kimi qalır */}
         <div className="detail-cart-footer">

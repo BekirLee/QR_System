@@ -12,6 +12,7 @@ import ReviewScreen from "./pages/ReviewScreen";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import FavoritesScreen from "./pages/FavoritesScreen";
 import { MenuProvider } from "./context/MenuContext";
+import Profile from "./pages/Profile";
 
 const AppContent = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const AppContent = () => {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/cart" element={<CartScreen />} />
         <Route path="/review" element={<ReviewScreen />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/favorites" element={<FavoritesScreen />} />
         <Route path="/product/:productId" element={<ProductDetailScreen />} />
       </Routes>
