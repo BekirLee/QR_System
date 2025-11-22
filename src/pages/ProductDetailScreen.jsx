@@ -183,7 +183,9 @@ const ProductDetailScreen = () => {
           Ona görə də mən onları statik olaraq saxlayıram. 
           Əgər API-dən gəlsəydi, 'product.rating' kimi istifadə etmək olardı.
         */}
-        <Row className="my-4">
+
+        
+        {/* <Row className="my-4">
           <NutritionInfo label="Protein" value={65} color="success" />
           <NutritionInfo label="Yağ" value={35} color="warning" />
           <NutritionInfo label="Karbohidrat" value={15} color="info" />
@@ -195,25 +197,24 @@ const ProductDetailScreen = () => {
           </Col>
           <Col>
             <i className="bi bi-clock text-primary me-1"></i>
-            {/* API-dən gəlmədiyi üçün müvəqqəti data */}
             {product.deliveryTime || "20-30"} Dəq
           </Col>
           <Col>
             <StarFill color="#ffc107" className="me-1" />
-            {/* API-dən gəlmədiyi üçün müvəqqəti data */}
             {product.rating || "4.5"}
           </Col>
-        </Row>
+        </Row> */}
 
         <div className="my-4">
           <h5 className="fw-bold">Təsvir:</h5>
           {/* whiteSpace: "pre-line" mətndəki \n (yeni sətir) işarələrini 
               HTML-də <br> kimi oxuyur */}
           <p className="text-muted" style={{ whiteSpace: "pre-line" }}>
-            {displayedText}
+            {/* {displayedText} */}
+            Məlumat yoxdur
 
             {/* Yalnız mətn həqiqətən uzundursa, düyməni göstər */}
-            {fullDescription.length > TRUNCATE_LENGTH && (
+            {/* {fullDescription.length > TRUNCATE_LENGTH && (
               <a
                 href="#"
                 className="text-decoration-none fw-bold ms-1"
@@ -221,18 +222,17 @@ const ProductDetailScreen = () => {
               >
                 {isExpanded ? "Daha az" : "Daha çox"}
               </a>
-            )}
+            )} */}
           </p>
         </div>
 
         {/* ... Tərkibi və Allergiya məlumatları olduğu kimi qalır ... */}
-        <div className="my-4">
-          <h5 className="fw-bold">Tərkibi:</h5>
-          <p className="text-muted">
-            Un, süd, yumurta, kərə yağı, şəkər, ağcaqayın siropu, təzə meyvələr
-            (banan, çiyələk, yaban mərsini), vanil ekstraktı, duz.
-          </p>
-        </div>
+        {product.ingredient && product.ingredient.trim() !== "" && (
+          <div className="my-4">
+            <h5 className="fw-bold">Tərkibi:</h5>
+            <p className="text-muted">{product.ingredient}</p>
+          </div>
+        )}
 
         {/* <div className="my-4">
           <h5 className="fw-bold">Allergiya məlumatları:</h5>
