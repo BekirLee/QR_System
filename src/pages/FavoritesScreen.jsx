@@ -34,7 +34,7 @@ const FavoritesList = () => {
         // API-da sahənin adı 'img'-dir, 'image' deyil. Və tam URL lazımdır.
         const imageUrl = item.img 
           ? `https://tamteam.net/${item.img}` 
-          : "https://via.placeholder.com/150"; // Şəkil yoxdursa placeholder
+          : "/img/image1.png"; // Şəkil yoxdursa placeholder
 
         return (
           <Row key={item.id} className="cart-item-new align-items-center mb-3">
@@ -49,18 +49,15 @@ const FavoritesList = () => {
             <Col xs={8}>
               <h6 className="fw-bold mb-1">{item.name}</h6>
               
-              {/* Reytinq və vaxt (əgər data yoxdursa gizlət və ya default ver) */}
-              <div className="d-flex align-items-center text-muted small mb-2">
-                {/* API-da deliveryTime yoxdursa, bu sətri silə və ya statik edə bilərsiz */}
+              {/* <div className="d-flex align-items-center text-muted small mb-2">
                 <span>
                   <Clock className="me-1"/> 15-20 dəq
                 </span>
                 <span className="ms-2">
                   <StarFill color="#ffc107" className="me-1" /> 4.8
                 </span>
-              </div>
+              </div> */}
 
-              {/* --- Qiymətin Göstərilməsi --- */}
               <h5 className="fw-bold text-primary mb-3">
                 {price} ₼
               </h5>

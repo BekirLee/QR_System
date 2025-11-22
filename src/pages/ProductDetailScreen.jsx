@@ -183,7 +183,6 @@ const ProductDetailScreen = () => {
           Ona görə də mən onları statik olaraq saxlayıram. 
           Əgər API-dən gəlsəydi, 'product.rating' kimi istifadə etmək olardı.
         */}
-
         
         {/* <Row className="my-4">
           <NutritionInfo label="Protein" value={65} color="success" />
@@ -205,16 +204,13 @@ const ProductDetailScreen = () => {
           </Col>
         </Row> */}
 
-        <div className="my-4">
+        {/* <div className="my-4">
           <h5 className="fw-bold">Təsvir:</h5>
-          {/* whiteSpace: "pre-line" mətndəki \n (yeni sətir) işarələrini 
-              HTML-də <br> kimi oxuyur */}
+    
           <p className="text-muted" style={{ whiteSpace: "pre-line" }}>
-            {/* {displayedText} */}
-            Məlumat yoxdur
+            {displayedText}
 
-            {/* Yalnız mətn həqiqətən uzundursa, düyməni göstər */}
-            {/* {fullDescription.length > TRUNCATE_LENGTH && (
+            {fullDescription.length > TRUNCATE_LENGTH && (
               <a
                 href="#"
                 className="text-decoration-none fw-bold ms-1"
@@ -222,9 +218,9 @@ const ProductDetailScreen = () => {
               >
                 {isExpanded ? "Daha az" : "Daha çox"}
               </a>
-            )} */}
+            )}
           </p>
-        </div>
+        </div> */}
 
         {/* ... Tərkibi və Allergiya məlumatları olduğu kimi qalır ... */}
         {product.ingredient && product.ingredient.trim() !== "" && (
