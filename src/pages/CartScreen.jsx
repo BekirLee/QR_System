@@ -85,7 +85,7 @@ const CartList = ({ onOrderComplete }) => {
               src={
                 item.img
                   ? `https://tamteam.net/${item.img}`
-                  : "https://via.placeholder.com/100"
+                  : "/img/image1.png"
               }
               alt={item.name}
               style={{

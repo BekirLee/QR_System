@@ -62,22 +62,43 @@ const ProductDetailScreen = () => {
   const displayedText = isExpanded
     ? fullDescription
     : `${fullDescription.substring(0, TRUNCATE_LENGTH)}...`;
+
   useEffect(() => {
-    if (status === "succeeded" && menuData.length > 0) {
-      setLoading(true);
+    // 1. Status 'succeeded' olmalıdır və menuData mövcud olmalıdır
+    if (status === "succeeded" && menuData) {
+      // 2. Kateqoriyaları düzgün yerdən götürürük
+      let categories = [];
+      if (menuData.menu && Array.isArray(menuData.menu)) {
+        categories = menuData.menu;
+      } else if (Array.isArray(menuData)) {
+        categories = menuData;
+      }
+
+      // 3. Məhsulu axtarırıq
       let foundProduct = null;
-      const allProducts = menuData
-        .flatMap((mainCat) => mainCat.categories)
-        .flatMap((subCat) => subCat.products);
-      foundProduct = allProducts.find((p) => p.id === productId);
+
+      // Bütün kateqoriyaları gəzirik
+      for (const category of categories) {
+        if (category.products && Array.isArray(category.products)) {
+          // ID-ləri string kimi müqayisə edirik (təhlükəsizlik üçün)
+          const product = category.products.find(
+            (p) => String(p.id) === String(productId)
+          );
+          if (product) {
+            foundProduct = product;
+            break; // Tapdıqsa dövrü dayandırırıq
+          }
+        }
+      }
+
       setProduct(foundProduct);
+      setLoading(false); // Yüklənməni dayandır
+    } else if (status === "failed") {
       setLoading(false);
-    } else if (status === "loading" || status === "idle") {
-      setLoading(true);
     }
   }, [status, menuData, productId]);
 
- const [showInfo, setShowInfo] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
 
   const handleShowInfo = () => setShowInfo(true);
 
@@ -105,9 +126,10 @@ const ProductDetailScreen = () => {
     navigate("/cart");
   };
 
-  const imageUrl = product.img
-    ? `https://tamteam.net/${product.img}`
-    : "https://via.placeholder.com/400";
+  const imageUrl =
+    product && product.img && product.img.trim() !== ""
+      ? `https://tamteam.net/${product.img}`
+      : "/img/image1.png";
 
   return (
     <div className="product-detail-page">
@@ -117,20 +139,20 @@ const ProductDetailScreen = () => {
           style={{ backgroundImage: `url(${imageUrl})` }}
         >
           <svg
-          className="header-wave-svg"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 375 240"
-          fill="none"
-          preserveAspectRatio="none"
-          onClick={handleShowInfo} // --- KLİK HADİSƏSİ ƏLAVƏ EDİLDİ ---
-          style={{ cursor: "pointer" }}
-        >
-          <path
-            d="M2.37162e-10 222.087C165.527 272.265 266.895 198.596 375 222.087C375 158.454 375 0 375 0H2.37162e-10C2.37162e-10 0 -2.96453e-10 191.683 2.37162e-10 222.087Z"
-            fill="url(#paint0_linear_2822_7033)"
-          />
-          <defs>
-            {/* <linearGradient
+            className="header-wave-svg"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 375 240"
+            fill="none"
+            preserveAspectRatio="none"
+            onClick={handleShowInfo} // --- KLİK HADİSƏSİ ƏLAVƏ EDİLDİ ---
+            style={{ cursor: "pointer" }}
+          >
+            <path
+              d="M2.37162e-10 222.087C165.527 272.265 266.895 198.596 375 222.087C375 158.454 375 0 375 0H2.37162e-10C2.37162e-10 0 -2.96453e-10 191.683 2.37162e-10 222.087Z"
+              fill="url(#paint0_linear_2822_7033)"
+            />
+            <defs>
+              {/* <linearGradient
               id="paint0_linear_2822_7033"
               x1="187.5"
               y1="240"
@@ -142,8 +164,8 @@ const ProductDetailScreen = () => {
               <stop offset="0.5" stopColor="#5b3a29" stopOpacity="0.3" />
               <stop offset="1" stopColor="#5b3a29" stopOpacity="0.7" />
             </linearGradient> */}
-          </defs>
-        </svg>
+            </defs>
+          </svg>
           <div className="detail-header-top">
             <Link to="/" className="text-dark">
               <ArrowLeft size={24} />

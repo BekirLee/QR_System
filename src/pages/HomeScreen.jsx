@@ -1,44 +1,48 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Container, Form, InputGroup } from 'react-bootstrap';
-import { Search } from 'react-bootstrap-icons';
-import Header from '../components/Header';
-import { useMenu } from '../context/MenuContext'; // Context-i import edirik
-import '../assets/css/HomeScreen.css'; // Mütləq CSS faylını import edin
-
-// Sizin komponentləri import edirik
-import CategoryFilters from '../components/CategoryFilters';
-import ProductGrid from '../components/ProductGrid';
+import React, { useState, useEffect, useRef } from "react";
+import { Container, Form, InputGroup, Spinner, Alert } from "react-bootstrap";
+import { Search } from "react-bootstrap-icons";
+import Header from "../components/Header";
+import { useMenu } from "../context/MenuContext";
+import CategoryFilters from "../components/CategoryFilters";
+import ProductGrid from "../components/ProductGrid";
+import "../assets/css/HomeScreen.css";
 
 const HomeScreen = () => {
-  // 1. Data və Statusu Context-dən alırıq
   const { menuData, status, error } = useMenu();
-
-  // 2. Daxili State-lər (Kateqoriyalar, Aktiv Kateqoriya)
   const [allCategories, setAllCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("");
 
-  // 3. Referanslar (Ref-lər)
-  const sectionRefs = useRef(new Map()); // Məhsul section-ları üçün
-  const filterButtonRefs = useRef(new Map()); // Filter düymələri üçün
-  const scrollDebounceTimer = useRef(null); // Scroll-u gözlətmək (debounce) üçün
+  const sectionRefs = useRef(new Map());
+  const filterButtonRefs = useRef(new Map());
+  const scrollDebounceTimer = useRef(null);
 
-  // 4. API Datasını Emal edən Effekt (data gələndə)
+  // --- ƏSAS DÜZƏLİŞ BURADA ---
   useEffect(() => {
-    if (status === "succeeded" && menuData && menuData.length > 0) {
-      // İç-içə datanı düz bir massivə çeviririk
-      const flattenedCategories = menuData.flatMap(
-        (mainCategory) => mainCategory.categories
-      );
-      setAllCategories(flattenedCategories);
-      
-      // İlkin aktiv kateqoriyanı təyin edirik
-      if (flattenedCategories.length > 0) {
-        setActiveCategory(flattenedCategories[0].id);
+    // Status 'succeeded' olmalıdır VƏ menuData gəlməlidir
+    if (status === "succeeded" && menuData) {
+      // 1. Yoxlayırıq: Gələn data Obyektdirmi və içində 'menu' varmı?
+      let categories = [];
+
+      if (menuData.menu && Array.isArray(menuData.menu)) {
+        // Yeni struktur: { profile: ..., menu: [...] }
+        categories = menuData.menu;
+      } else if (Array.isArray(menuData)) {
+        // Köhnə struktur (əgər birbaşa massiv gəlirsə)
+        categories = menuData;
+      }
+
+      console.log("HomeScreen Kateqoriyalar:", categories); // Konsolda yoxlayın
+
+      setAllCategories(categories);
+
+      // İlk kateqoriyanı seçirik
+      if (categories.length > 0) {
+        setActiveCategory(categories[0].id);
       }
     }
   }, [menuData, status]);
+  // ---------------------------
 
-  // 5. Vertikal Scroll-u İzləyən Effekt (IntersectionObserver + Debounce)
   useEffect(() => {
     if (allCategories.length === 0) return;
 
@@ -46,116 +50,120 @@ const HomeScreen = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // "Atma" probleminin qarşısını almaq üçün debounce
-            if (scrollDebounceTimer.current) {
+            if (scrollDebounceTimer.current)
               clearTimeout(scrollDebounceTimer.current);
-            }
+            const newId = entry.target.dataset.id;
 
-            const newActiveCategoryId = entry.target.dataset.id;
-            
-            // Aktiv kateqoriyanı 150ms gecikmə ilə təyin et
-            scrollDebounceTimer.current = setTimeout(() => {
-              setActiveCategory(newActiveCategoryId);
-            }, 150);
+            // Debounce müddətini azaltdıq (daha cəld reaksiya versin)
+            scrollDebounceTimer.current = setTimeout(
+              () => setActiveCategory(newId),
+              50
+            );
           }
         });
       },
-      { rootMargin: "-20% 0px -70% 0px", threshold: 0.1 } // Ekranın yuxarı hissəsi
+      {
+        // DÜZƏLİŞ BURADA:
+        // "-130px" -> Header-in təxmini hündürlüyü qədər yuxarıdan "görməzdən gəlirik"
+        // Beləliklə, element Header-in altına girəndə aktiv olur.
+        rootMargin: "-130px 0px -60% 0px",
+        threshold: 0.05,
+      }
     );
 
-    sectionRefs.current.forEach((section) => { if (section) observer.observe(section); });
+    sectionRefs.current.forEach((section) => {
+      if (section) observer.observe(section);
+    });
 
-    // Təmizləmə funksiyası
     return () => {
       observer.disconnect();
-      if (scrollDebounceTimer.current) {
+      if (scrollDebounceTimer.current)
         clearTimeout(scrollDebounceTimer.current);
-      }
     };
-  }, [allCategories]); // Yalnız kateqoriyalar yükləndikdə qurulsun
+  }, [allCategories]);
 
-  // 6. Horizontal Filter Barını Hərəkət etdirən Effekt
-  // Bu, 'activeCategory' (gecikmə ilə) dəyişdikdə işə düşür
+  // Horizontal Scroll Effekti
   useEffect(() => {
-    if (!activeCategory) return; 
-
+    if (!activeCategory) return;
     const button = filterButtonRefs.current.get(activeCategory);
     if (button) {
-      // Düyməni horizontal olaraq mərkəzə gətir
       button.scrollIntoView({
         behavior: "smooth",
         inline: "center",
         block: "nearest",
       });
     }
-  }, [activeCategory]); // Debounce ilə təyin olunan 'activeCategory'-ni izləyir
+  }, [activeCategory]);
 
-  // 7. Düyməyə Klikləmə Funksiyası (Gecikmə OLMADAN)
   const scrollToCategory = (id) => {
-    // Gözləmədə olan timer varsa ləğv et
-    if (scrollDebounceTimer.current) {
-      clearTimeout(scrollDebounceTimer.current);
-    }
-    
-    // 1. Səhifəni həmin kateqoriyaya (vertikal) scroll et
+    if (scrollDebounceTimer.current) clearTimeout(scrollDebounceTimer.current);
     const section = sectionRefs.current.get(id);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    
-    // 2. State-i dərhal dəyiş (Bu, 6-cı effekti də dərhal işə salacaq)
-    setActiveCategory(id); 
+    if (section) section.scrollIntoView({ behavior: "smooth", block: "start" });
+    setActiveCategory(id);
   };
 
-  // 8. Yüklənmə və Xəta Göstəriciləri
+  // --- Render Hissəsi ---
   if (status === "loading" || status === "idle") {
-    return <Container className="d-flex justify-content-center align-items-center vh-100"><div>Yüklənir...</div></Container>;
+    return (
+      <Container className="d-flex justify-content-center align-items-center vh-100">
+        <Spinner animation="border" />
+      </Container>
+    );
   }
   if (status === "failed") {
-    return <Container className="pt-5"><div>Xəta baş verdi: {error}</div></Container>;
+    return (
+      <Container className="pt-5">
+        <Alert variant="danger">Xəta: {error}</Alert>
+      </Container>
+    );
+  }
+  if (allCategories.length === 0) {
+    return (
+      <Container className="pt-5">
+        <Alert variant="warning">Menyu boşdur.</Alert>
+      </Container>
+    );
   }
 
-  // 9. Render (JSX)
   return (
     <Container fluid className="p-0 menu-container">
       <Header />
 
-      {/* Axtarış Qutusu */}
       <div className="p-2">
         <InputGroup>
-          <InputGroup.Text><Search /></InputGroup.Text>
+          <InputGroup.Text>
+            <Search />
+          </InputGroup.Text>
           <Form.Control
             type="text"
-            placeholder="Axtar və ya təkliflərdən seç..."
+            placeholder="Axtar..."
             className="border-start-0"
           />
         </InputGroup>
       </div>
 
-      {/* Dinamik Kateqoriya Filteri (Sticky) */}
-      <CategoryFilters 
+      <CategoryFilters
         categories={allCategories}
         activeCategory={activeCategory}
         onCategoryClick={scrollToCategory}
         buttonRefs={filterButtonRefs}
       />
-      
-      {/* Dinamik Məhsul Siyahısı */}
+
       <div className="product-list-container">
         {allCategories.map((category) => (
           <section
             key={category.id}
-            id={category.id} // Kliklə scroll üçün
-            data-id={category.id} // Observer-in oxuması üçün
-            ref={(el) => { // Section ref-lərini yığır
+            id={category.id}
+            data-id={category.id}
+            ref={(el) => {
               if (el) sectionRefs.current.set(category.id, el);
             }}
-            className="category-section" // CSS-də boşluq (padding) üçün
+            className="category-section"
           >
-            {/* Sizin ProductGrid komponentiniz */}
-            <ProductGrid 
+            {/* Products massivi kateqoriyanın içindədir */}
+            <ProductGrid
               title={category.name}
-              products={category.products} 
+              products={category.products || []}
             />
           </section>
         ))}

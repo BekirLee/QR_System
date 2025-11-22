@@ -177,12 +177,12 @@ const BottomNav = () => {
           </svg>
         </Link>
 
-        <Link
+        {/* <Link
           to="/profile"
           cclassName={`bottom-nav-item ${
             location.pathname === "/profile" ? "active" : ""
           }`}
-        >
+        > */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -205,7 +205,7 @@ const BottomNav = () => {
               stroke-linejoin="round"
             />
           </svg>
-        </Link>
+        {/* </Link> */}
       </nav>
     </div>
   );
