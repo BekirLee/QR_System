@@ -15,8 +15,8 @@ import {
   Twitter,
   Tiktok
 } from "react-bootstrap-icons";
-import { useMenu } from "../context/MenuContext"; 
 import "./../assets/css/Header.css";
+import { useMenu } from "../context/MenuContext";
 
 const InfoSheet = ({ show, onHide }) => {
   const { menuData } = useMenu();

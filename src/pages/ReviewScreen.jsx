@@ -1,9 +1,9 @@
 // src/pages/ReviewScreen.jsx
 import React, { useState } from 'react';
 import { Container, Button, Form } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Star, StarFill, SendFill } from 'react-bootstrap-icons';
-import './../assets/css/ReviewScreen.css'
+import './../assets/css/ReviewScreen.css';
 
 const ratingData = {
   1: { emoji: '😞', text: 'Yaxşılaşdırılmalıdır 😕' },
@@ -14,22 +14,46 @@ const ratingData = {
 };
 
 const ReviewScreen = () => {
-  const [rating, setRating] = useState(1); 
-  const [hoverRating, setHoverRating] = useState(0); 
+  const [rating, setRating] = useState(1);
+  const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // URL-dən ?r=... parametrini götürürük
+  const searchParams = new URLSearchParams(location.search);
+  const businessName = searchParams.get("r");
+  console.log(businessName)
 
   const currentDisplayRating = hoverRating || rating;
   const currentEmoji = ratingData[currentDisplayRating].emoji;
   const currentText = ratingData[currentDisplayRating].text;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
+
+    const payload = {
+      business: businessName,
       rating: rating,
       comment: comment
-    });
-    navigate('/');
+    };
+
+    try {
+      const response = await fetch("https://qr.tamteam.net/create_rewiev.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.text();
+      console.log("Server response:", result);
+
+      navigate('/');
+    } catch (error) {
+      console.error("POST error:", error);
+    }
   };
 
   return (
@@ -42,13 +66,12 @@ const ReviewScreen = () => {
           Qiymətləndirmə
         </h5>
       </div>
-      
+
       <div className="review-body text-center">
-        <div className="emoji-display">
-          {currentEmoji}
-        </div>
+        <div className="emoji-display">{currentEmoji}</div>
 
         <h3 className="fw-bold my-3">Təcrübənizi qiymətləndirin</h3>
+
         <div className="stars-container">
           {[1, 2, 3, 4, 5].map((index) => (
             <span
@@ -62,15 +85,15 @@ const ReviewScreen = () => {
             </span>
           ))}
         </div>
-        
+
         <p className="rating-text mt-2">{currentText}</p>
 
         <Form onSubmit={handleSubmit} className="text-start mt-5">
           <Form.Group>
-            <Form.Label htmlFor="review-comment" className="fw-bold fs-5">Əlavə qeydlər</Form.Label>
+            <Form.Label className="fw-bold fs-5">Əlavə qeydlər</Form.Label>
             <p className="text-muted small">Təcrübəniz barədə daha ətraflı məlumat verin (istəyə görə)</p>
+
             <Form.Control
-              id="review-comment"
               as="textarea"
               rows={5}
               placeholder="Fikirlərinizi bizimlə bölüşün..."
@@ -79,7 +102,7 @@ const ReviewScreen = () => {
               onChange={(e) => setComment(e.target.value)}
             />
           </Form.Group>
-          
+
           <Button variant="primary" type="submit" className="w-100 mt-4 btn-submit-review">
             <SendFill className="me-2" /> Rəyinizi göndərin
           </Button>
