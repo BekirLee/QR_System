@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Badge } from "react-bootstrap";
 import {
   Wifi,
@@ -18,12 +18,12 @@ const Header = () => {
   const handleShowInfo = () => setShowInfo(true);
   const handleCloseInfo = () => setShowInfo(false);
 
-
   const profile = menuData?.profile || {};
 
-  const headerBgImage = (profile.background_img && profile.background_img.trim() !== "")
-    ? `https://tamteam.net/${profile.background_img}` // API şəkli
-    : "/img/image1.png";
+  const headerBgImage =
+    profile.background_img && profile.background_img.trim() !== ""
+      ? `https://tamteam.net/${profile.background_img}` // API şəkli
+      : "/img/image1.png";
 
   // Şəkil yoxdursa default bir şəkil qoyuruq
   const bgImage =
@@ -40,11 +40,17 @@ const Header = () => {
   const address = profile.address || "";
   const serviceFee = profile.service_fee || "0";
 
+  useEffect(() => {
+    if (restaurantName) {
+      document.title = restaurantName + " - UniPOS";
+    }
+  }, [restaurantName]);
+
   return (
     <div className="main-header-wrapper">
       <div
         className="header-background-image"
-        style={{ backgroundImage: `url('${headerBgImage}')` }} // Dinamik Fon
+        style={{ backgroundImage: `url('${headerBgImage}')` }} 
       >
         <svg
           className="header-wave-svg"
@@ -172,7 +178,7 @@ const Header = () => {
       {/* 5. Dinamik Mətnlər */}
       <div className="header-content-bottom">
         <h1 className="cafe-name">{restaurantName}</h1>
-        <p className="cafe-type">{address ? `(${address})` : ""}</p>
+        <p className="cafe-type">Ünvan:  {address ? `${address}` : ""}</p>
         {/*         
         <div className="d-flex align-items-center justify-content-center flex-wrap gap-2 mt-2">
           <div className="d-flex align-items-center rating-info">
