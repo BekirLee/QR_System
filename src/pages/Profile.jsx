@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { Container, Button, InputGroup, FormControl } from "react-bootstrap";
 import {
   Wifi,
@@ -11,9 +11,10 @@ import {
   Facebook,
   Instagram,
   Twitter,
-  Tiktok
+  Tiktok,
 } from "react-bootstrap-icons";
 import { useMenu } from "../context/MenuContext"; // 1. Context importu vacibdir
+import { Helmet } from "react-helmet";
 
 const Profile = () => {
   const { menuData } = useMenu(); // 2. Datanı çağırırıq
@@ -28,14 +29,14 @@ const Profile = () => {
   const restaurantName = profile.restaurant_name || "Restoran";
   const address = profile.address || "";
   const openHours = profile.open_hours || "";
-  
+
   // Logo şəkli
-  const logoUrl = profile.logo 
-    ? `https://tamteam.net/${profile.logo}` 
+  const logoUrl = profile.logo
+    ? `https://tamteam.net/${profile.logo}`
     : "https://via.placeholder.com/100x100?text=Logo";
 
   const handleCopyClick = () => {
-    if(wifiPassword) {
+    if (wifiPassword) {
       navigator.clipboard.writeText(wifiPassword).then(() => {
         setIsCopied(true);
         setTimeout(() => setIsCopied(false), 2000);
@@ -44,20 +45,36 @@ const Profile = () => {
   };
 
   return (
-    <Container className="info-sheet pt-4" style={{paddingBottom: "100px"}}>
-      
+    <Container className="info-sheet pt-4" style={{ paddingBottom: "100px" }}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Profile - UniPOS</title>
+      </Helmet>
       <div className="border-0 pb-0 mb-3 text-center">
-        
         {/* Logo Hissəsi */}
         <div className="d-flex justify-content-center mb-3">
-             <div style={{width: '80px', height: '80px', borderRadius: '50%', overflow: 'hidden', border: '1px solid #ddd'}}>
-                 <img src={logoUrl} alt="Logo" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-             </div>
+          <div
+            style={{
+              width: "80px",
+              height: "80px",
+              borderRadius: "50%",
+              overflow: "hidden",
+              border: "1px solid #ddd",
+            }}
+          >
+            <img
+              src={logoUrl}
+              alt="Logo"
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          </div>
         </div>
 
         <div className="info-sheet-header">
           <h2>{restaurantName}</h2>
-          <p className="text-muted mb-0">{profile.about || "Xoş gəlmisiniz!"}</p>
+          <p className="text-muted mb-0">
+            {profile.about || "Xoş gəlmisiniz!"}
+          </p>
         </div>
       </div>
 
@@ -72,7 +89,7 @@ const Profile = () => {
               <h6>WiFi məlumatları</h6>
               <div className="text-muted small">Şəbəkə</div>
               <div className="fw-bold mb-2">{wifiSSID}</div>
-              
+
               {/* Şifrə varsa göstər */}
               {wifiPassword && (
                 <>
@@ -88,7 +105,11 @@ const Profile = () => {
                       onClick={handleCopyClick}
                       className="copy-btn"
                     >
-                      {isCopied ? <ClipboardCheck size={20} color="green" /> : <Clipboard size={20} />}
+                      {isCopied ? (
+                        <ClipboardCheck size={20} color="green" />
+                      ) : (
+                        <Clipboard size={20} />
+                      )}
                     </Button>
                   </InputGroup>
                 </>
@@ -105,9 +126,7 @@ const Profile = () => {
             </div>
             <div className="info-content">
               <h6>Ünvan</h6>
-              <p className="mb-0">
-                {address}
-              </p>
+              <p className="mb-0">{address}</p>
             </div>
           </div>
         )}
@@ -130,7 +149,6 @@ const Profile = () => {
 
         {/* Sosial İkonlar - Yalnız data varsa görünsün */}
         <div className="social-icons-row text-center mt-4 d-flex justify-content-center gap-3 flex-wrap">
-          
           {/* Telefon */}
           {profile.phone && (
             <a href={`tel:${profile.phone}`} className="social-icon text-dark">
@@ -140,43 +158,51 @@ const Profile = () => {
 
           {/* Whatsapp - Telefon varsa Whatsapp da aktiv olsun */}
           {profile.phone && (
-            <a href={`https://wa.me/${profile.phone.replace(/[^0-9]/g, '')}`} className="social-icon whatsapp text-success">
+            <a
+              href={`https://wa.me/${profile.phone.replace(/[^0-9]/g, "")}`}
+              className="social-icon whatsapp text-success"
+            >
               <Whatsapp size={24} />
             </a>
           )}
 
           {/* Facebook - Boş deyilsə göstər */}
           {profile.facebook && profile.facebook !== "" && (
-            <a href={profile.facebook} className="social-icon facebook text-primary">
+            <a
+              href={profile.facebook}
+              className="social-icon facebook text-primary"
+            >
               <Facebook size={24} />
             </a>
           )}
 
           {/* Instagram - Boş deyilsə göstər */}
           {profile.instagram && profile.instagram !== "" && (
-            <a href={profile.instagram} className="social-icon instagram text-danger">
+            <a
+              href={profile.instagram}
+              className="social-icon instagram text-danger"
+            >
               <Instagram size={24} />
             </a>
           )}
 
           {/* Twitter */}
           {profile.twitter && profile.twitter !== "" && (
-             <a href={profile.twitter} className="social-icon text-dark">
-               <Twitter size={24} />
-             </a>
+            <a href={profile.twitter} className="social-icon text-dark">
+              <Twitter size={24} />
+            </a>
           )}
 
           {/* Tiktok */}
           {profile.tiktok && profile.tiktok !== "" && (
-             <a href={profile.tiktok} className="social-icon text-dark">
-               <Tiktok size={24} />
-             </a>
+            <a href={profile.tiktok} className="social-icon text-dark">
+              <Tiktok size={24} />
+            </a>
           )}
-
         </div>
       </div>
     </Container>
   );
-}
+};
 
 export default Profile;

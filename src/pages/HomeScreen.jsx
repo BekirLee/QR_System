@@ -6,6 +6,7 @@ import { useMenu } from "../context/MenuContext";
 import CategoryFilters from "../components/CategoryFilters";
 import ProductGrid from "../components/ProductGrid";
 import "../assets/css/HomeScreen.css";
+import { Helmet } from "react-helmet";
 
 const HomeScreen = () => {
   const { menuData, status, error } = useMenu();
@@ -34,7 +35,6 @@ const HomeScreen = () => {
       }
     }
   }, [menuData, status]);
-
 
   // --- 2. YENİ: Filtrləmə Məntiqi ---
   // Axtarış sözünə əsasən kateqoriyaları və məhsulları süzürük
@@ -132,6 +132,10 @@ const HomeScreen = () => {
 
   return (
     <Container fluid className="p-0 menu-container">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Home - UniPOS</title>
+      </Helmet>
       <Header />
 
       <div className="p-2">

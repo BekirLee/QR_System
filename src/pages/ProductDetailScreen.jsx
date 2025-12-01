@@ -21,6 +21,7 @@ import {
 import { useCart } from "../context/CartContext";
 import { useMenu } from "../context/MenuContext";
 import "./../assets/css/ProductDetail.css"; // CSS faylınız (App.css-dən ayrıdırsa)
+import { Helmet } from "react-helmet";
 
 // ... NutritionInfo komponenti olduğu kimi qalır ...
 const NutritionInfo = ({ label, value, color }) => (
@@ -133,6 +134,10 @@ const ProductDetailScreen = () => {
 
   return (
     <div className="product-detail-page">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Details - UniPOS</title>
+      </Helmet>
       <div className="main-header-wrapper">
         <div
           className="detail-header-image"
@@ -183,7 +188,7 @@ const ProductDetailScreen = () => {
           Ona görə də mən onları statik olaraq saxlayıram. 
           Əgər API-dən gəlsəydi, 'product.rating' kimi istifadə etmək olardı.
         */}
-        
+
         {/* <Row className="my-4">
           <NutritionInfo label="Protein" value={65} color="success" />
           <NutritionInfo label="Yağ" value={35} color="warning" />

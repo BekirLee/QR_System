@@ -1,10 +1,15 @@
 import React from "react";
 import { Container, Button } from "react-bootstrap";
-import {  X } from "react-bootstrap-icons"; 
-import "../assets/css/ServiceBlockScreen.css"; 
+import { X } from "react-bootstrap-icons";
+import "../assets/css/ServiceBlockScreen.css";
+import { Helmet } from "react-helmet";
 const ServiceBlockScreen = () => {
   return (
     <div className="blocked-screen-wrapper">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Blocked - UniPOS</title>
+      </Helmet>
       <div className="blocked-content">
         <div className="text-center mb-4">
           <h2 className="fw-bold text-secondary">TamPos</h2>

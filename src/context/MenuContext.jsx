@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-} from "react";
+import React, { createContext, useState, useEffect, useContext, useCallback } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
@@ -13,9 +7,7 @@ const MenuContext = createContext();
 export const useMenu = () => {
   const context = useContext(MenuContext);
   if (!context) {
-    throw new Error(
-      "useMenu mütləq MenuProvider daxilində istifadə olunmalıdır."
-    );
+    throw new Error("useMenu mütləq MenuProvider daxilində istifadə olunmalıdır.");
   }
   return context;
 };
@@ -32,14 +24,13 @@ export const MenuProvider = ({ children }) => {
   const checkBlockingStatus = (profile) => {
     if (!profile) return false;
 
-    if (profile.is_menu_block === "1") {
+    if (String(profile.is_menu_block) === "1") {
       return true;
     }
 
     if (profile.next_payment_date) {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-
       const paymentDate = new Date(profile.next_payment_date);
 
       if (paymentDate < today) {
@@ -49,67 +40,69 @@ export const MenuProvider = ({ children }) => {
 
     return false;
   };
+
   const fetchMenu = useCallback(async (profileId) => {
     if (!profileId) return;
 
+    setIsBlocked(false);
     setStatus("loading");
     setError(null);
-    setCurrentRestaurantId(profileId); // Hazırkı ID-ni qeyd edirik
+    setCurrentRestaurantId(profileId);
 
     try {
       const response = await axios.get(
         `https://tamteam.net/api/v3/get_menu_list?profileId=${profileId}`
       );
 
-      if (
-        !response.data ||
-        (response.data.menu && response.data.menu.length === 0)
-      ) {
-        throw new Error("Menyu tapılmadı.");
+      if (!response.data || (response.data.menu && response.data.menu.length === 0)) {
+         throw new Error("Menyu tapılmadı.");
       }
 
       setMenuData(response.data);
+
       const blockedStatus = checkBlockingStatus(response.data.profile);
       setIsBlocked(blockedStatus);
+
       setStatus("succeeded");
     } catch (err) {
-      console.error("API Xətası:", err);
       setError(err.message || "Xəta baş verdi");
       setStatus("failed");
+      setIsBlocked(false);
     }
   }, []);
 
   useEffect(() => {
-    let profileId = null;
-    const path = location.pathname;
+      let profileId = null;
+      const path = location.pathname;
+      
+      if (path.includes("r=")) {
+        const parts = path.split("r=");
+        if (parts[1]) profileId = parts[1].split("/")[0]; 
+      }
+      
+      if (!profileId) {
+        const searchParams = new URLSearchParams(location.search);
+        const queryParam = searchParams.get("r");
+        if (queryParam) profileId = queryParam;
+      }
 
-    if (path.includes("r=")) {
-      const parts = path.split("r=");
-      if (parts[1]) profileId = parts[1].split("/")[0];
-    }
+      if (profileId) {
+        localStorage.setItem("restaurantId", profileId);
+      } else {
+        profileId = localStorage.getItem("restaurantId");
+      }
+      
+      if (!profileId) return;
 
-    if (!profileId) {
-      const searchParams = new URLSearchParams(location.search);
-      const queryParam = searchParams.get("r");
-      if (queryParam) profileId = queryParam;
-    }
+      if (currentRestaurantId === profileId && menuData) {
+          const blocked = checkBlockingStatus(menuData.profile);
+          setIsBlocked(blocked);
+          return;
+      }
 
-    if (profileId) {
-      localStorage.setItem("restaurantId", profileId);
-    } else {
-      profileId = localStorage.getItem("restaurantId");
-    }
+      fetchMenu(profileId);
 
-
-    if (!profileId) return;
-
-    if (currentRestaurantId === profileId && menuData) {
-      return;
-    }
-
-    fetchMenu(profileId);
-
-  }, [location.pathname, location.search]);
+  }, [location.pathname, location.search, fetchMenu, currentRestaurantId, menuData]); 
 
   const value = {
     menuData,

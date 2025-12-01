@@ -5,12 +5,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, StarFill, Clock } from "react-bootstrap-icons"; // Clock icon əlavə etdim
 import { useFavorites } from "../context/FavoritesContext";
 import { useCart } from "../context/CartContext";
-import '../assets/css/CartScreen.css';
+import "../assets/css/CartScreen.css";
+import { Helmet } from "react-helmet";
 
 const EmptyFavorites = () => (
   <div className="empty-cart-container text-center">
     <div className="gif-placeholder">
-      <img src="/img/noFavorites.gif" alt="Boş sevimlilər" className="empty-cart-gif w-100" style={{maxWidth: '300px'}} />
+      <img
+        src="/img/noFavorites.gif"
+        alt="Boş sevimlilər"
+        className="empty-cart-gif w-100"
+        style={{ maxWidth: "300px" }}
+      />
     </div>
     <h3 className="mt-4">Sevimlilər Siyahınız Boşdur</h3>
     <p className="text-muted">Bəyəndiyiniz məhsullar burada görünəcək.</p>
@@ -32,23 +38,23 @@ const FavoritesList = () => {
 
         // --- DÜZƏLİŞ 2: Şəkil URL-ini düzəldirik ---
         // API-da sahənin adı 'img'-dir, 'image' deyil. Və tam URL lazımdır.
-        const imageUrl = item.img 
-          ? `https://tamteam.net/${item.img}` 
+        const imageUrl = item.img
+          ? `https://tamteam.net/${item.img}`
           : "/img/image1.png"; // Şəkil yoxdursa placeholder
 
         return (
           <Row key={item.id} className="cart-item-new align-items-center mb-3">
             <Col xs={4}>
-              <Image 
-                src={imageUrl} 
-                fluid 
-                rounded 
-                style={{ height: '80px', objectFit: 'cover', width: '100%' }} 
+              <Image
+                src={imageUrl}
+                fluid
+                rounded
+                style={{ height: "80px", objectFit: "cover", width: "100%" }}
               />
             </Col>
             <Col xs={8}>
               <h6 className="fw-bold mb-1">{item.name}</h6>
-              
+
               {/* <div className="d-flex align-items-center text-muted small mb-2">
                 <span>
                   <Clock className="me-1"/> 15-20 dəq
@@ -58,9 +64,7 @@ const FavoritesList = () => {
                 </span>
               </div> */}
 
-              <h5 className="fw-bold text-primary mb-3">
-                {price} ₼
-              </h5>
+              <h5 className="fw-bold text-primary mb-3">{price} ₼</h5>
 
               <div className="d-flex justify-content-between align-items-center">
                 <Button
@@ -156,6 +160,10 @@ const FavoritesScreen = () => {
 
   return (
     <Container fluid className="p-3 cart-screen">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Favorites - UniPOS</title>
+      </Helmet>
       <div className="cart-header d-flex align-items-center mb-4">
         <Link to="/" className="text-dark me-3">
           <ArrowLeft size={24} />
@@ -168,11 +176,7 @@ const FavoritesScreen = () => {
         </h5>
       </div>
 
-      {favorites.length === 0 ? (
-        <EmptyFavorites />
-      ) : (
-        <FavoritesList />
-      )}
+      {favorites.length === 0 ? <EmptyFavorites /> : <FavoritesList />}
     </Container>
   );
 };

@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap-icons";
 import { useCart } from "../context/CartContext";
 import "../assets/css/CartScreen.css";
+import { Helmet } from "react-helmet";
 
 const EmptyCart = () => (
   <div className="empty-cart-container text-center">
@@ -83,9 +84,7 @@ const CartList = ({ onOrderComplete }) => {
             <Image
               // URL-i HomeScreen-dəki kimi düzəldirik
               src={
-                item.img
-                  ? `https://tamteam.net/${item.img}`
-                  : "/img/image1.png"
+                item.img ? `https://tamteam.net/${item.img}` : "/img/image1.png"
               }
               alt={item.name}
               style={{
@@ -346,6 +345,10 @@ const CartScreen = () => {
 
   return (
     <Container fluid className="p-3 cart-screen">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Cart - UniPOS</title>
+      </Helmet>
       <div className="cart-header d-flex align-items-center mb-4">
         <Link to={backLink} className="text-dark me-3">
           <ArrowLeft size={24} />

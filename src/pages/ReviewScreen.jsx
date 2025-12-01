@@ -4,6 +4,7 @@ import { Container, Button, Form } from "react-bootstrap";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ArrowLeft, Star, StarFill, SendFill } from "react-bootstrap-icons";
 import "./../assets/css/ReviewScreen.css";
+import { Helmet } from "react-helmet";
 
 const ratingData = {
   1: { emoji: "😞", text: "Yaxşılaşdırılmalıdır 😕" },
@@ -87,6 +88,10 @@ const ReviewScreen = () => {
 
   return (
     <Container fluid className="p-3 review-screen">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Review - UniPOS</title>
+      </Helmet>
       <div className="review-header d-flex align-items-center mb-4">
         <Link to="/" className="text-dark me-3">
           <ArrowLeft size={24} />
