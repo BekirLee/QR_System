@@ -7,13 +7,13 @@ import {
   StarFill,
   PersonFill,
 } from "react-bootstrap-icons";
-import { useMenu } from "../context/MenuContext"; // 1. Context importu
+import { useMenu } from "../context/MenuContext"; 
 import "./../assets/css/Header.css";
 import InfoSheet from "./InfoSheet";
 
 const Header = () => {
   const [showInfo, setShowInfo] = useState(false);
-  const { menuData } = useMenu(); // 2. Datanı götürürük
+  const { menuData } = useMenu(); 
 
   const handleShowInfo = () => setShowInfo(true);
   const handleCloseInfo = () => setShowInfo(false);
@@ -22,10 +22,10 @@ const Header = () => {
 
   const headerBgImage =
     profile.background_img && profile.background_img.trim() !== ""
-      ? `https://tamteam.net/${profile.background_img}` // API şəkli
+      ? `https://tamteam.net/${profile.background_img}` 
       : "/img/image1.png";
 
-  // Şəkil yoxdursa default bir şəkil qoyuruq
+
   const bgImage =
     profile.background_img && profile.background_img !== ""
       ? `https://tamteam.net/${profile.background_img}`
