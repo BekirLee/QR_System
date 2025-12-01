@@ -47,6 +47,7 @@ const ReviewScreen = () => {
   };
 
   const businessName = getBusinessName();
+  console.log(businessName)
 
   // 2. Business Name tapılan kimi onu yaddaşa yazırıq ki, səhifə yenilənəndə itməsin
   useEffect(() => {

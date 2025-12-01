@@ -12,7 +12,7 @@ const ServiceBlockScreen = () => {
       </Helmet>
       <div className="blocked-content">
         <div className="text-center mb-4">
-          <h2 className="fw-bold text-secondary">TamPos</h2>
+          <h2 className="fw-bold text-secondary">UniPOS</h2>
         </div>
 
         <div className="text-center mb-3">

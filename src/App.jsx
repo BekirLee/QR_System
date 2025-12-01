@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { FavoritesProvider } from "./context/FavoritesContext";
-import { MenuProvider, useMenu } from "./context/MenuContext";
+import { MenuProvider, useMenu } from "./context/MenuContext"; // MenuContext importu
 
 import HomeScreen from "./pages/HomeScreen";
 import CartScreen from "./pages/CartScreen";
@@ -13,26 +13,35 @@ import FavoritesScreen from "./pages/FavoritesScreen";
 import Profile from "./pages/Profile";
 import BottomNav from "./components/BottomNav";
 import "./App.css";
-import ServiceBlockedScreen from "./pages/ServiceBlockScreen";
+import ServiceBlockScreen from "./pages/ServiceBlockScreen"; // Adını düzgün yoxlayın (ServiceBlockScreen vs ServiceBlockedScreen)
 
 const AppContent = () => {
   const location = useLocation();
-  const { isBlocked, status, menuData } = useMenu();
-  const hideNavRoutes = ["/product/"];
+  // Context-dən isBlocked-i götürürük
+  const { isBlocked, status } = useMenu();
+
+  // Yüklənmə vaxtı (İstəyə görə)
+  if (status === "loading") {
+    return (
+      <div className="d-flex justify-content-center mt-5">
+        <div className="spinner-border text-primary"></div>
+      </div>
+    );
+  }
+
+  if (isBlocked) {
+    return <ServiceBlockScreen />;
+  }
 
   const showBottomNav = !location.pathname.startsWith("/product/");
 
-  if (isBlocked) {
-    return <ServiceBlockedScreen />;
-  }
   return (
     <div className="mobile-view-wrapper">
       <Routes>
-        {/* 1. Standart Ana Səhifə */}
         <Route path="/" element={<HomeScreen />} />
         <Route path="/cart" element={<CartScreen />} />
         <Route path="/review" element={<ReviewScreen />} />
-        <Route path="/profile" element={<Profile />} />
+        {/* <Route path="/profile" element={<Profile />} /> */}
         <Route path="/favorites" element={<FavoritesScreen />} />
         <Route path="/product/:productId" element={<ProductDetailScreen />} />
       </Routes>

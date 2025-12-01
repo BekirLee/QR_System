@@ -14,9 +14,10 @@ const BottomNav = () => {
 
   const searchParams = new URLSearchParams(location.search);
   const businessName = searchParams.get("r");
+  console.log(businessName);
 
   const getLink = (path) => {
-    if (!businessName) return path; 
+    if (!businessName) return path;
     return path.includes("?")
       ? `${path}&r=${businessName}`
       : `${path}?r=${businessName}`;
