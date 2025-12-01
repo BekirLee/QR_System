@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { FavoritesProvider } from "./context/FavoritesContext";
-import { MenuProvider } from "./context/MenuContext";
+import { MenuProvider, useMenu } from "./context/MenuContext";
 
 import HomeScreen from "./pages/HomeScreen";
 import CartScreen from "./pages/CartScreen";
@@ -13,16 +13,18 @@ import FavoritesScreen from "./pages/FavoritesScreen";
 import Profile from "./pages/Profile";
 import BottomNav from "./components/BottomNav";
 import "./App.css";
+import ServiceBlockedScreen from "./pages/ServiceBlockScreen";
 
 const AppContent = () => {
   const location = useLocation();
-
-  // BottomNav-ın görünməməsi lazım olan səhifələr
+  const { isBlocked, status, menuData } = useMenu();
   const hideNavRoutes = ["/product/"];
 
-  // Əgər hazırkı yol '/product/' ilə başlayırsa, nav-ı gizlət
   const showBottomNav = !location.pathname.startsWith("/product/");
 
+  if (isBlocked) {
+    return <ServiceBlockedScreen />;
+  }
   return (
     <div className="mobile-view-wrapper">
       <Routes>
@@ -32,13 +34,9 @@ const AppContent = () => {
         <Route path="/review" element={<ReviewScreen />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/favorites" element={<FavoritesScreen />} />
-        <Route
-          path="/product/:productId"
-          element={<ProductDetailScreen />}
-        />
+        <Route path="/product/:productId" element={<ProductDetailScreen />} />
       </Routes>
 
-      {/* BottomNav-ı sadəcə showBottomNav true olduqda göstər */}
       {showBottomNav && <BottomNav />}
     </div>
   );
