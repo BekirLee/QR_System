@@ -39,7 +39,7 @@ const ReviewScreen = () => {
     };
 
     try {
-      const response = await fetch("https://qr.tamteam.net/create_rewiev.php", {
+      const response = await fetch("https://tamteam.net/api/v1/create_review", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
