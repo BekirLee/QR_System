@@ -118,7 +118,7 @@ const DrawStrawsScreen = () => {
                         </div>
                         <h3>Neçə nəfər oynayır?</h3>
                         <p className="setup-desc">
-                            Masa ətrafında neçə nəfər var? Hesabı kim ödəyəcəyini müəyyən edək!
+                            Masa ətrafında neçə nəfər var? Hesabı kimin ödəyəcəyini müəyyən edək!
                         </p>
 
                         <div className="player-counter">

@@ -1,24 +1,31 @@
 /* src/assets/css/DrawStraws.css */
 
-/* DƏYİŞİKLİK 1: Arxa plan - Zəngin Yaşıl Gradient (Pul mövzusu) */
+/* 1. ARXA PLAN: Klassik Yaşıl Poker Masası effekti (Radial Gradient) */
 .draw-straws-screen {
     min-height: 100vh;
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    /* Mərkəzdən kənara doğru tündləşən yaşıl */
+    background: radial-gradient(circle at center, #35654d 0%, #0f221c 100%);
     padding-bottom: 100px;
+    font-family: 'Roboto', sans-serif;
+    /* Varsa daha ciddi font */
 }
 
-/* Header */
+/* Header: Tünd şüşə effekti */
 .draw-straws-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 16px 20px;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.4);
+    /* Daha tünd */
     backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    /* Zəif qızılı xətt */
 }
 
 .draw-straws-header .back-btn {
-    color: white;
+    color: #d4af37;
+    /* Gold rəng */
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -26,24 +33,29 @@
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(212, 175, 55, 0.3);
     transition: all 0.3s ease;
 }
 
 .draw-straws-header .back-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(212, 175, 55, 0.2);
+    border-color: #d4af37;
     transform: scale(1.05);
 }
 
 .draw-straws-header .header-title {
-    color: white;
+    color: #d4af37;
+    /* Gold Title */
     font-weight: 700;
     font-size: 1.25rem;
     margin: 0;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Setup Phase */
+/* 2. KARTLAR: Qara VIP Dizayn + Qızılı Çərçivə */
 .setup-phase {
     display: flex;
     align-items: center;
@@ -53,14 +65,31 @@
 }
 
 .setup-card {
-    background: white;
+    background: #1a1a1a;
+    /* Tünd bozumtul qara */
+    border: 2px solid #d4af37;
+    /* Qızıl Çərçivə */
     border-radius: 24px;
     padding: 40px 30px;
     text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.8);
     max-width: 350px;
     width: 100%;
     animation: slideUp 0.5s ease-out;
+    position: relative;
+}
+
+/* "Kart Destesi" kimi görünməsi üçün dekorativ element */
+.setup-card::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 1px dashed rgba(212, 175, 55, 0.3);
+    border-radius: 18px;
+    pointer-events: none;
 }
 
 @keyframes slideUp {
@@ -75,27 +104,33 @@
     }
 }
 
-/* DƏYİŞİKLİK 2: İkon Rəngi - Arxa plana uyğun yaşıl */
 .setup-icon {
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #d4af37 0%, #aa8c2c 100%);
+    /* Gold Gradient */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 24px;
-    color: white;
+    color: #1a1a1a;
+    border: 4px solid #2a2a2a;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
 }
 
 .setup-card h3 {
     font-weight: 700;
-    color: #333;
+    color: #fff;
+    /* Ağ mətn */
     margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .setup-desc {
-    color: #666;
+    color: #aaa;
+    /* Boz mətn */
     font-size: 0.95rem;
     margin-bottom: 30px;
     line-height: 1.5;
@@ -109,7 +144,7 @@
     margin-bottom: 30px;
 }
 
-/* DƏYİŞİKLİK 3: Sayğac Düymələri - Yaşıl rəngdə */
+/* Sayğac Düymələri: Poker Fişkası stili */
 .counter-btn {
     width: 50px;
     height: 50px;
@@ -119,22 +154,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #11998e;
-    /* Border rəngi dəyişdi */
-    color: #11998e;
-    /* Text rəngi dəyişdi */
-    background: white;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    background: transparent;
     transition: all 0.3s ease;
 }
 
 .counter-btn:hover:not(:disabled) {
-    background: #11998e;
-    /* Hover rəngi dəyişdi */
-    color: white;
+    background: #d4af37;
+    color: #1a1a1a;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
 }
 
 .counter-btn:disabled {
-    opacity: 0.4;
+    opacity: 0.3;
+    border-color: #555;
+    color: #555;
     cursor: not-allowed;
 }
 
@@ -147,34 +182,41 @@
 .count-number {
     font-size: 3rem;
     font-weight: 800;
-    color: #333;
+    color: #d4af37;
+    /* Gold rəqəm */
     line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .count-label {
     font-size: 0.9rem;
     color: #888;
     margin-top: 4px;
+    text-transform: uppercase;
 }
 
-/* DƏYİŞİKLİK 4: Başlat Düyməsi - Yaşıl Gradient və Yaşıl Kölgə */
+/* 3. BAŞLAT DÜYMƏSİ: Qızıl Külçə / Casino Button */
 .start-game-btn {
     width: 100%;
     padding: 16px 32px;
     font-size: 1.1rem;
-    font-weight: 700;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-    border: none;
-    color: white;
-    box-shadow: 0 8px 25px rgba(56, 239, 125, 0.4);
-    /* Kölgə rəngi dəyişdi */
+    font-weight: 800;
+    border-radius: 12px;
+    /* Parlaq Gold Gradient */
+    background: linear-gradient(to bottom, #f1d374 0%, #cba239 100%);
+    border: 1px solid #fff;
+    color: #222;
+    /* Tünd yazı oxunaqlılıq üçün */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
 }
 
 .start-game-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(56, 239, 125, 0.5);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+    filter: brightness(1.1);
 }
 
 /* Playing Phase */
@@ -186,59 +228,63 @@
     align-items: center;
 }
 
-/* DƏYİŞİKLİK 5: Pulsasiya Effekti - Yaşıl işıq */
 .current-player-info {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 16px 32px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 12px 32px;
     border-radius: 50px;
     display: flex;
     align-items: center;
     gap: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid #d4af37;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     margin-bottom: 20px;
-    animation: pulse 2s infinite;
+    animation: pulseGold 2s infinite;
 }
 
-@keyframes pulse {
+@keyframes pulseGold {
 
     0%,
     100% {
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.1);
     }
 
     50% {
-        box-shadow: 0 10px 40px rgba(56, 239, 125, 0.5);
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
     }
-
-    /* Pulse rəngi dəyişdi */
 }
 
 .player-label {
-    color: #666;
+    color: #ccc;
     font-size: 0.9rem;
+    text-transform: uppercase;
 }
 
-/* DƏYİŞİKLİK 6: Oyunçu Nömrəsi Rəngi */
 .player-number {
     font-size: 1.2rem;
     font-weight: 700;
-    color: #11998e;
+    color: #d4af37;
 }
 
 .instruction-text {
-    color: white;
+    color: #e0e0e0;
     font-size: 1.1rem;
     margin-bottom: 30px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .straws-container {
     display: flex;
     justify-content: center;
-    gap: 12px;
+    gap: 15px;
     flex-wrap: wrap;
     max-width: 400px;
     margin-bottom: 30px;
+    /* Kart dileri qutusu hissi verə bilər */
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .straw-wrapper {
@@ -250,67 +296,73 @@
 }
 
 .straw-wrapper.hidden:hover {
-    transform: translateY(-8px);
-}
-
-.straw-wrapper.hidden:active {
-    transform: scale(0.95);
+    transform: translateY(-10px);
 }
 
 .straw-wrapper.revealed {
     cursor: default;
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
 .straw-wrapper.revealed.short {
     opacity: 1;
 }
 
+/* 4. ÇÖPLƏR: Daha Premium Dizayn */
 .straw-top {
-    width: 45px;
-    height: 45px;
-    background: linear-gradient(145deg, #f5e6d3, #dbc6a8);
+    width: 50px;
+    height: 50px;
+    /* Poker çipi və ya kart arxası kimi */
+    background: radial-gradient(circle, #aa0000 30%, #550000 100%);
+    border: 2px solid #d4af37;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Dekorativ halqa */
+.straw-top::after {
+    content: '';
+    width: 36px;
+    height: 36px;
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    position: absolute;
 }
 
 .straw-wrapper.hidden .straw-top {
-    background: linear-gradient(145deg, #fff9f0, #f5e6d3);
+    background: radial-gradient(circle, #800000 0%, #400000 100%);
 }
 
 .straw-wrapper.hidden .straw-top:hover {
-    background: linear-gradient(145deg, #ffe4c4, #dbc6a8);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    border-color: #fff;
 }
 
 .pick-me {
-    font-size: 1.5rem;
-    color: #8b7355;
+    font-size: 1.2rem;
+    color: #d4af37;
     font-weight: bold;
 }
 
 .picked-by {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 700;
-    color: #666;
-}
-
-.straw-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    color: #aaa;
+    margin-top: 5px;
 }
 
 .straw-stick {
-    width: 8px;
+    width: 10px;
     height: 80px;
-    background: linear-gradient(180deg, #d4a574 0%, #b8956e 50%, #a07850 100%);
+    background: linear-gradient(90deg, #d4af37, #f1d374, #d4af37);
+    /* Qızıl Çubuq */
     border-radius: 0 0 4px 4px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .straw-wrapper.revealed .straw-stick {
@@ -327,9 +379,11 @@
     }
 }
 
+/* Uduzan çöp - Sınıq/Qara çöp */
 .straw-wrapper.short .straw-stick {
     height: 40px;
-    background: linear-gradient(180deg, #ff6b6b 0%, #ee5253 100%);
+    background: linear-gradient(90deg, #333, #000, #333);
+    /* Yanmış/Qara çubuq */
 }
 
 .straw-bottom {
@@ -338,31 +392,22 @@
     animation: fadeIn 0.3s ease-out 0.3s both;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
 .straw-bottom.long {
-    color: #2ecc71;
+    color: #d4af37;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
 .straw-bottom.short {
-    color: #e74c3c;
+    color: #ff4444;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
 
 .progress-info {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.5);
     padding: 12px 24px;
     border-radius: 50px;
-    color: white;
+    color: #d4af37;
+    border: 1px solid #d4af37;
     font-weight: 600;
 }
 
@@ -373,16 +418,15 @@
     justify-content: center;
     min-height: calc(100vh - 80px);
     padding: 20px;
-    position: relative;
-    overflow: hidden;
 }
 
 .result-card {
-    background: white;
+    background: #1a1a1a;
+    border: 2px solid #d4af37;
     border-radius: 24px;
     padding: 40px 30px;
     text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
     max-width: 350px;
     width: 100%;
     animation: bounceIn 0.6s ease-out;
@@ -390,53 +434,19 @@
     z-index: 10;
 }
 
-@keyframes bounceIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.3);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-
-    70% {
-        transform: scale(0.95);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
 .result-emoji {
     font-size: 5rem;
     margin-bottom: 16px;
     animation: shake 0.5s ease-in-out infinite;
-}
-
-@keyframes shake {
-
-    0%,
-    100% {
-        transform: rotate(0deg);
-    }
-
-    25% {
-        transform: rotate(-5deg);
-    }
-
-    75% {
-        transform: rotate(5deg);
-    }
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
 }
 
 .result-title {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #333;
+    color: #fff;
     margin-bottom: 24px;
+    text-transform: uppercase;
 }
 
 .loser-display {
@@ -444,10 +454,12 @@
     align-items: center;
     justify-content: center;
     gap: 12px;
-    background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
+    background: linear-gradient(135deg, #800000 0%, #330000 100%);
+    /* Tünd Qırmızı */
     padding: 16px 32px;
-    border-radius: 16px;
+    border-radius: 12px;
     margin-bottom: 20px;
+    border: 1px solid #ff4444;
 }
 
 .trophy-icon {
@@ -458,10 +470,11 @@
     color: white;
     font-size: 1.5rem;
     font-weight: 800;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .result-message {
-    color: #666;
+    color: #ccc;
     font-size: 1rem;
     margin-bottom: 30px;
 }
@@ -472,40 +485,42 @@
     gap: 12px;
 }
 
-/* DƏYİŞİKLİK 7: Yenidən Oyna Düyməsi - Yaşıl */
 .play-again-btn {
     padding: 14px 28px;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     border-radius: 12px;
-    border: 2px solid #11998e;
-    color: #11998e;
-    background: white;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    background: transparent;
+    text-transform: uppercase;
     transition: all 0.3s ease;
 }
 
 .play-again-btn:hover {
-    background: #11998e;
-    color: white;
+    background: #d4af37;
+    color: #1a1a1a;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
 }
 
-/* DƏYİŞİKLİK 8: Menyua Qayıt Düyməsi - Yaşıl Gradient */
 .back-to-menu-btn {
     display: inline-block;
     padding: 14px 28px;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     border-radius: 12px;
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-    color: white;
+    background: linear-gradient(to bottom, #f1d374 0%, #cba239 100%);
+    color: #222;
     text-decoration: none;
+    text-transform: uppercase;
     transition: all 0.3s ease;
+    border: 1px solid #fff;
 }
 
 .back-to-menu-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(56, 239, 125, 0.4);
-    color: white;
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+    color: #000;
 }
 
 /* Confetti */
