@@ -11,6 +11,7 @@ import ProductDetailScreen from "./pages/ProductDetailScreen";
 import ReviewScreen from "./pages/ReviewScreen";
 import FavoritesScreen from "./pages/FavoritesScreen";
 import Profile from "./pages/Profile";
+import DrawStrawsScreen from "./pages/DrawStrawsScreen";
 import BottomNav from "./components/BottomNav";
 import "./App.css";
 import ServiceBlockScreen from "./pages/ServiceBlockScreen"; // Adını düzgün yoxlayın (ServiceBlockScreen vs ServiceBlockedScreen)
@@ -44,6 +45,7 @@ const AppContent = () => {
         {/* <Route path="/profile" element={<Profile />} /> */}
         <Route path="/favorites" element={<FavoritesScreen />} />
         <Route path="/product/:productId" element={<ProductDetailScreen />} />
+        <Route path="/game" element={<DrawStrawsScreen />} />
       </Routes>
 
       {showBottomNav && <BottomNav />}

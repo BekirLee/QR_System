@@ -44,9 +44,8 @@ const BottomNav = () => {
         {/* ANA SƏHİFƏ */}
         <Link
           to={getLink("/")}
-          className={`bottom-nav-item ${
-            location.pathname === "/" ? "active" : ""
-          }`}
+          className={`bottom-nav-item ${location.pathname === "/" ? "active" : ""
+            }`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -75,9 +74,8 @@ const BottomNav = () => {
         {/* SEÇİLMİŞLƏR (FAVORITES) */}
         <Link
           to={getLink("/favorites")}
-          className={`bottom-nav-item favoritesBtn ${
-            location.pathname === "/favorites" ? "active" : ""
-          }`}
+          className={`bottom-nav-item favoritesBtn ${location.pathname === "/favorites" ? "active" : ""
+            }`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -99,12 +97,13 @@ const BottomNav = () => {
           )}
         </Link>
 
+
+
         {/* SƏBƏT (CART) */}
         <Link
           to={getLink("/cart")}
-          className={`bottom-nav-item cart-btn ${
-            location.pathname === "/cart" ? "active" : ""
-          }`}
+          className={`bottom-nav-item cart-btn ${location.pathname === "/cart" ? "active" : ""
+            }`}
           style={{ background: "#053796" }}
         >
           <svg
@@ -153,9 +152,8 @@ const BottomNav = () => {
         {/* REVIEW */}
         <Link
           to={getLink("/review")}
-          className={`bottom-nav-item ${
-            location.pathname === "/review" ? "active" : ""
-          }`}
+          className={`bottom-nav-item ${location.pathname === "/review" ? "active" : ""
+            }`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -181,12 +179,11 @@ const BottomNav = () => {
           </svg>
         </Link>
 
-        {/* PROFILE */}
+        {/* OYUN (GAME) */}
         <Link
-          to={getLink("/profile")}
-          className={`bottom-nav-item ${
-            location.pathname === "/profile" ? "active" : ""
-          }`}
+          to={getLink("/game")}
+          className={`bottom-nav-item ${location.pathname === "/game" ? "active" : ""
+            }`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -196,14 +193,21 @@ const BottomNav = () => {
             fill="none"
           >
             <path
-              d="M12.16 10.87C12.06 10.86 11.94 10.86 11.83 10.87C9.45 10.79 7.56 8.84 7.56 6.44C7.56 3.99 9.54 2 12 2C14.45 2 16.44 3.99 16.44 6.44C16.43 8.84 14.54 10.79 12.16 10.87Z"
+              d="M9.5 13.75C9.5 14.72 10.25 15.5 11.17 15.5H13.05C13.85 15.5 14.5 14.82 14.5 13.97C14.5 13.06 14.1 12.73 13.51 12.52L10.5 11.47C9.91 11.26 9.51 10.94 9.51 10.02C9.51 9.18 10.16 8.49 10.96 8.49H12.84C13.76 8.49 14.51 9.27 14.51 10.24"
               stroke="#B5B5B5"
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
             <path
-              d="M7.16 14.56C4.74 16.18 4.74 18.82 7.16 20.43C9.91 22.27 14.42 22.27 17.17 20.43C19.59 18.81 19.59 16.17 17.17 14.56C14.43 12.73 9.92 12.73 7.16 14.56Z"
+              d="M12 7.5V16.5"
+              stroke="#B5B5B5"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M22 12C22 17.52 17.52 22 12 22C6.48 22 2 17.52 2 12C2 6.48 6.48 2 12 2C17.52 2 22 6.48 22 12Z"
               stroke="#B5B5B5"
               strokeWidth="1.5"
               strokeLinecap="round"
